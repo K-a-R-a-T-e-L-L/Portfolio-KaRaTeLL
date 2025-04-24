@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  number   String @unique
+  password String @unique
+}
+
+model Project {
+  id              Int       @id @default(autoincrement())
+  name            String
+  link            String
+  description     String
+  positioningIcon Json      @default("[]")
+  color           String
+  skills          String[]
+  URLImages       Json      @default("{}")
+  view            Boolean[]
+}
+
+model Skill {
+  id     Int     @id @default(autoincrement())
+  value  String
+  active Boolean
+}
+
+model MessagesIP {
+  id       Int        @id @default(autoincrement())
+  ip       String     @unique
+  name     String
+  contacts String
+  messages Messages[]
+  date     DateTime
+}
+
+model Messages {
+  id           Int        @id @default(autoincrement())
+  message      String
+  messagesIPID Int
+  messagesIP   MessagesIP @relation(fields: [messagesIPID], references: [id], onDelete: Cascade)
+}

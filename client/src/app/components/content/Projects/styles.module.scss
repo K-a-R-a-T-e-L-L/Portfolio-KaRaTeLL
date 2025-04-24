@@ -1,0 +1,115 @@
+.article {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    row-gap: 20px;
+    position: relative;
+    perspective: 10000px;
+
+    .article__add_projects {
+        width: 90%;
+        background-color: transparent;
+
+        .add_projects__link {
+            font-size: 12px;
+            color: greenyellow;
+            border-radius: 5px;
+            padding: 1px;
+            text-align: start;
+            opacity: 0.7;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:active {
+                background-color: rgba(0, 255, 255, 0.037);
+            }
+        }
+    }
+}
+
+@media (width < 1000px) {
+    .article {
+        row-gap: 0 !important;
+
+        .project__box_stack {
+            height: 20px !important;
+
+            .box_stack__el {
+                font-size: 6px !important;
+                padding: 0 5px !important;
+            }
+        }
+    }
+}
+
+@media (width < 900px) {
+    .article {
+        .article__project {
+            &:hover {
+                .project__description {
+                    padding: 10px 20px 2px 2px;
+                }
+            }
+
+            .project__description {
+                padding: 5px 15px 1px 1px;
+                gap: 5px;
+
+                .description__name {
+                    font-size: 13px;
+                }
+
+                .description__description {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media (width < 600px) {
+    .article {
+        margin-top: 10px;
+    }
+}
+
+@media (width < 500px) {
+    .article {
+        .article__project {
+            border-radius: 5px;
+
+            &:hover {
+                .project__description {
+                    padding: 5px 10px 2px 2px;
+                }
+            }
+
+            .project__box_stack {
+                margin-bottom: 5px;
+
+                .box_stack__el {
+                    font-size: 5px !important;
+                    padding: 0 4px !important;
+                }
+            }
+
+            .project__description {
+                padding: 3px 8px 1px 1px;
+                gap: 5px;
+
+                .description__name {
+                    font-size: 10px;
+                }
+
+                .description__description {
+                    font-size: 8px;
+                }
+            }
+        }
+    }
+}

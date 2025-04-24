@@ -1,0 +1,40 @@
+.button_exit {
+    position: absolute;
+    bottom: 2vw;
+    right: 2vw;
+    width: 90px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 0, 0, 0.315);
+    background-color: rgb(10, 1, 1);
+    cursor: pointer;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transition: transform 0.2s ease;
+    color: red;
+    z-index: 2;
+    animation: AppereanceButtonBack 0.3s ease-out;
+
+    &:hover {
+        background-color: rgb(15, 2, 2);
+
+        &::before {
+            margin-right: 8px;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px);
+        border: 0.01px solid rgba(255, 0, 0, 0.539);
+    }
+
+    &::before {
+        content: "✕";
+        color: red;
+        font-weight: 900;
+        margin-right: 5px;
+        position: relative;
+        font-size: 12px;
+        bottom: 1px;
+        transition: margin-right 0.3s ease;
+    }
+}

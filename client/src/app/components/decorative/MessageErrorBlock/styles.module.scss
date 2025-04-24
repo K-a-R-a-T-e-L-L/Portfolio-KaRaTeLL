@@ -1,0 +1,62 @@
+.error {
+    width: 20vw;
+    max-height: 7vw;
+    aspect-ratio: 3/0.9;
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    border-radius: 0.5vw;
+    position: absolute;
+    bottom: 2vw;
+    right: 2vw;
+    display: grid;
+    place-items: center;
+    color: white;
+    padding: 1vw 2vw;
+    animation: AppereanceError 1s ease-out;
+    z-index: 2;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 0, 0, 0.6);
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 0, 0, 0.6);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 0, 0, 0.2);
+        border-radius: 6px;
+    }
+
+    .error__message {
+        word-break: break-all !important;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        font-size: 1.2vw;
+    }
+
+    .error__close {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        z-index: 1;
+        font-size: 1.1vw;
+        font-weight: 900;
+        border: 0;
+        background-color: transparent;
+        color: white;
+        cursor: pointer;
+    }
+}

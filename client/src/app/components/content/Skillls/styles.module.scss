@@ -1,0 +1,181 @@
+.article {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100%;
+    width: 100%;
+
+    .article__side_box {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 0 10px 10px 10px;
+
+        @keyframes AnimationAppereanceH2 {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .side_box__h2_one {
+            font-family: 'TrueTypeWriter PoliglOTT';
+            font-size: 25px;
+            animation: AnimationAppereanceH2 1s ease;
+        }
+
+        .side_box__h2_two {
+            font-family: 'TrueTypeWriter PoliglOTT';
+            font-size: 25px;
+            animation: AnimationAppereanceH2 1s ease;
+            animation-delay: 0.5s;
+            animation-fill-mode: backwards;
+        }
+
+        .side_box__skills {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            padding-top: 10px;
+            position: relative;
+
+            @keyframes AnimationAppereanceSkill {
+                0% {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: translateY(0px);
+                    opacity: 1;
+                }
+            }
+
+            .skills__skill {
+                width: 100%;
+                aspect-ratio: 10/1;
+                overflow: hidden;
+                background-color: rgba(var(--random-color), 0.1);
+                border: 1px solid rgba(var(--random-color), 0.3);
+                display: flex;
+                align-items: center;
+                padding-left: 10%;
+                border-radius: 5px;
+                font-size: 1.1vw;
+                font-family: Piksieli Prst;
+                position: relative;
+                animation: AnimationAppereanceSkill 1s ease;
+                animation-delay: var(--delay);
+                animation-fill-mode: backwards;
+
+                .skill__edit_box {
+                    width: 20%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    position: absolute;
+                    right: 1%;
+
+                    .edit_box__checkbox {
+                        height: 60%;
+                        aspect-ratio: 1/1;
+                    }
+
+                    .edit_box__delete {
+                        height: 60%;
+                        aspect-ratio: 1/1;
+                        background-color: rgba(255, 0, 0, 0.2);
+                        border-radius: 3px;
+                        border: 1px solid red;
+                        background-image: url(/images/delete.png);
+                        background-position: center center;
+                        background-size: 100% 100%;
+                        background-repeat: no-repeat;
+
+                        &:hover {
+                            background-color: rgba(255, 0, 0, 0.4);
+                        }
+
+                        &:active {
+                            background-color: rgba(255, 0, 0, 0.6);
+                        }
+
+                    }
+
+                    .edit_box__delete_two {
+                        background-image: none;
+                        display: grid;
+                        place-items: center;
+                        padding: 0;
+                        font-size: 9px;
+                        background-color: rgba(255, 0, 0, 0.2);
+                        border-radius: 3px;
+                        border: 1px solid red;
+                    }
+                }
+
+            }
+
+            .skills__adding_skill {
+                width: 100%;
+                aspect-ratio: 10/1;
+                background-color: rgba(0, 255, 221, 0.1);
+                border: 1px solid rgba(0, 255, 225, 0.7);
+                border-radius: 5px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .adding_skill__input {
+                    width: 90%;
+                    height: 100%;
+                    background-color: transparent;
+                    border: 0px;
+                    padding: 3%;
+                }
+
+                .adding_skill__button {
+                    width: 10%;
+                    aspect-ratio: 1/1;
+                    background-image: url(/images/send.png);
+                    background-size: 60% 60%;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+
+                    &:active {
+                        background-size: 55% 55%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (width < 800px) {
+    .side_box__h2_one {
+        font-size: 18px !important;
+    }
+
+    .skills__adding_skill {
+        border-radius: 3px !important;
+    }
+
+    .side_box__h2_two {
+        font-size: 18px !important;
+    }
+
+    .skills__skill {
+        border-radius: 3px !important;
+    }
+}
+
+@media (width < 600px) {
+    .article {
+        margin-top: 20px;
+    }
+}

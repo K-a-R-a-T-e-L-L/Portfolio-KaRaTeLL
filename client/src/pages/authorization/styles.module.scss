@@ -1,0 +1,168 @@
+.div_secret_form {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: black;
+    display: grid;
+    place-items: center;
+
+    .div_secret_form__form {
+        width: 60vw;
+        height: 500px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        perspective: 1000px;
+
+        @keyframes Appereance {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .form__avatar {
+            width: 50%;
+            aspect-ratio: 200/150;
+            max-height: 220px;
+            min-height: 150px;
+            position: relative;
+            z-index: 2;
+            background-image: url(/images/djForm.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            animation: Appereance 1s ease;
+        }
+
+        .form__div_input {
+            position: relative;
+            width: 70%;
+            height: 40px;
+
+            .div_input__input {
+                width: 100%;
+                height: 100%;
+                padding-left: 20px;
+                border-radius: 5px 5px 0 0;
+                background-color: black;
+                color: rgb(232, 255, 187);
+                border: none;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.505);
+                outline: none;
+                animation: Appereance 1s ease;
+            }
+
+            .strong {
+                color: rgb(255, 47, 0);
+                font-size: 8px;
+                letter-spacing: 1px;
+            }
+        }
+
+        .form__button {
+            width: 40%;
+            height: 30px;
+            background-color: rgb(0, 19, 19);
+            color: rgba(255, 255, 255, 0.572);
+            font-size: 10px;
+            border: 1px solid rgb(0, 32, 33);
+            border-radius: 3px;
+            font-weight: bold;
+            cursor: pointer;
+            animation: Appereance 1s ease;
+
+            &:hover {
+                color: white;
+                background-color: rgb(0, 24, 24);
+            }
+
+            &:active {
+                scale: 0.99;
+            }
+        }
+
+        .form__h1 {
+            color: whitesmoke !important;
+            text-align: center;
+            font-size: 20px;
+            animation: Appereance 1s ease;
+        }
+    }
+
+    @keyframes AppereanceError {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .secret_form__error {
+        width: 20vw;
+        max-height: 7vw;
+        aspect-ratio: 3/0.9;
+        overflow: scroll;
+        overflow-x: hidden;
+        background-color: rgba(255, 0, 0, 0.2);
+        border: 1px solid rgba(255, 0, 0, 0.3);
+        border-radius: 0.5vw;
+        position: absolute;
+        bottom: 2vw;
+        right: 2vw;
+        display: grid;
+        place-items: center;
+        color: white;
+        padding: 1vw 2vw;
+        animation: AppereanceError 1s ease-out;
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            height: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 0, 0, 0.6);
+            border-radius: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 0, 0, 0.6);
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(255, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .error__message {
+            word-break: break-all !important;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            font-size: 1.2vw;
+        }
+
+        .error__close {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            z-index: 1;
+            font-size: 1.1vw;
+            font-weight: 900;
+            border: 0;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+        }
+    }
+}

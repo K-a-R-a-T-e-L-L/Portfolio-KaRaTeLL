@@ -1,0 +1,259 @@
+.project {
+    width: 90%;
+    // aspect-ratio: 10/1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    @keyframes AnimationProject {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .project_card_animation {
+        animation: AnimationProject 1s ease;
+    }
+
+    .project_card {
+        width: 100% !important;
+        height: auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        outline: none;
+        text-decoration: none;
+        color: white;
+
+        &:focus-visible {
+            .project_card__project {
+                border-width: 3px;
+                outline: 0;
+                box-shadow: 0 0 2px 1px white;
+
+                .project__description {
+                    padding: 15px 35px 15px 15px;
+                }
+            }
+        }
+
+        .project_card__project {
+            width: 100%;
+            aspect-ratio: 3.5;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 119, 0.2);
+            cursor: pointer;
+            background-color: transparent;
+            transition: border 0.2s ease, outline 0.2s ease;
+            position: relative;
+
+            &:hover {
+                border-width: 2px;
+
+                .project__description {
+                    padding: 15px 35px 15px 15px;
+                }
+            }
+
+            &:focus-visible {
+                border-width: 2px;
+                outline: 0;
+
+                .project__description {
+                    padding: 15px 35px 15px 15px;
+                }
+            }
+
+            &:active {
+                scale: 0.995;
+
+                .project__description {
+                    .description__background_image {
+                        opacity: 0.4;
+                    }
+                }
+            }
+
+            .project__box_stack {
+                position: absolute;
+                left: 40%;
+                bottom: 0;
+                height: 25px;
+                width: auto;
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+                margin-left: 5%;
+
+                .box_stack__el {
+                    background-color: black;
+                    color: rgba(127, 255, 212, 0.682);
+                    padding: 0 10px;
+                    display: grid;
+                    place-items: center;
+                    border-radius: 3px;
+                    border: 1px solid rgba(127, 255, 212, 0.288);
+                    font-size: 7px;
+                    font-family: 'Piksieli Prst';
+                    letter-spacing: 1px;
+                }
+            }
+
+            .project__preview {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                place-items: center;
+                position: relative;
+
+                .preview__image {
+                    object-fit: contain;
+                }
+            }
+
+            .project__description {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: end;
+                gap: 10px;
+                padding: 10px 30px 10px 10px;
+                transition: padding 0.3s ease;
+                position: relative;
+                box-sizing: border-box;
+                overflow: hidden;
+
+                .description__name {
+                    font-size: 20px;
+                    font-family: 'Capture Smallz';
+                    letter-spacing: 1px;
+                    margin: 0;
+                }
+
+                .description__description {
+                    text-align: end;
+                    opacity: 0.8;
+                    max-width: 80%;
+                    font-size: 14px;
+                    margin: 0;
+                }
+
+                @mixin PositionBacgroundImage ($rotate, $right, $bottom, $left) {
+                    rotate: $rotate;
+                    right: $right;
+                    bottom: $bottom;
+                    left: $left;
+                }
+
+                .description__background_image {
+                    width: 20%;
+                    aspect-ratio: 1/1;
+                    position: absolute;
+                    opacity: 0.3;
+                    object-fit: contain;
+
+                    &:first-of-type {
+                        @include PositionBacgroundImage(30deg, none, -5%, 10%);
+                    }
+
+                    &:nth-of-type(2) {
+                        @include PositionBacgroundImage(-30deg, none, 35%, 45%);
+                    }
+
+                    &:last-of-type {
+                        @include PositionBacgroundImage(-160deg, -2%, 5%, none);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (width < 1100px) {
+    .project_card {
+        width: 90% !important;
+        margin-top: 20px !important;
+    }
+}
+
+@media (width < 800px) {
+    .project__box_stack {
+        margin-bottom: 10px;
+        margin-left: 3%;
+        height: 15px;
+
+        .box_stack__el {
+            font-size: 5px;
+            padding: 0 7px;
+            border-radius: 2px;
+            height: 15px;
+        }
+    }
+
+    .project__description {
+        .description__name {
+            font-size: 16px !important;
+        }
+
+        .description__description {
+            font-size: 10px !important;
+        }
+    }
+}
+
+@media (width < 600px) {
+    .project_card__project {
+        border-radius: 5px;
+
+        &:hover {
+            .project__description {
+                padding: 10px 20px 2px 2px !important;
+            }
+        }
+
+        .project__description {
+            padding: 5px 15px 1px 1px !important;
+            gap: 5px;
+
+            .description__name {
+                font-size: 14px !important;
+            }
+
+            .description__description {
+                font-size: 8px !important;
+            }
+        }
+    }
+}
+
+@media (width < 500px) {
+    .description__name {
+        font-size: 12px !important;
+    }
+
+    .description__description {
+        font-size: 6px !important;
+    }
+
+    .project__box_stack {
+        margin: 0 0 0 10px !important;
+        height: 20px !important;
+
+        .box_stack__el {
+            font-size: 5px !important;
+            padding: 0 5px !important;
+        }
+    }
+
+    .project__description {
+        gap: 0 !important;
+    }
+}

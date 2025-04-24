@@ -1,0 +1,119 @@
+.slider {
+    width: 1000px;
+    height: 250px;
+    position: relative;
+    top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .slider__window {
+        width: 400px;
+        height: 250px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+
+        .window__img {
+            min-width: 100%;
+            min-height: 100%;
+            border-radius: 5px;
+            transition: transform 0.5s ease-in-out, opacity 0.2s ease-in-out;
+            display: grid;
+            place-items: center;
+            position: relative;
+
+            .img__image {
+                border-radius: 5px;
+                object-fit: cover;
+            }
+
+            @mixin ButtonSwipe ($left, $right) {
+                position: absolute;
+                left: $left;
+                right: $right;
+                width: 30px;
+                height: 40%;
+                background-color: rgba(255, 0, 0, 0);
+                z-index: 2;
+                font-size: 50px;
+                color: white;
+                font-weight: 100;
+                border: none;
+                cursor: pointer;
+                opacity: 0.7;
+
+                &:hover {
+                    color: aqua;
+                }
+
+                &:active {
+                    opacity: 1;
+                }
+
+                &:focus-visible {
+                    outline: 1px solid rgba(0, 255, 255, 0.259);
+                }
+            }
+
+            .img__button_left {
+                @include ButtonSwipe(-10%, none);
+            }
+
+            .img__button_right {
+                @include ButtonSwipe(none, -10%);
+            }
+        }
+    }
+}
+
+@media (width < 1200px) {
+    .slider {
+        width: 800px;
+        height: 200px;
+
+        .slider__window {
+            width: 320px;
+            height: 200px;
+        }
+    }
+}
+
+@media (width < 1040px) {
+    .slider {
+        top: 50px;
+        margin-bottom: 50px;
+    }
+}
+
+@media (width < 900px) {
+    .slider {
+        width: 600px;
+    }
+}
+
+@media (width < 650px) {
+    .slider {
+        width: 400px;
+        height: 150px;
+
+        .slider__window {
+            width: 240px;
+            height: 150px;
+
+            .window__img {
+                .img__button_left {
+                    font-size: 30px
+                }
+
+                .img__button_right {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}

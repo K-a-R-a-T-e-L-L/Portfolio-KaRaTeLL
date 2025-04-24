@@ -1,0 +1,198 @@
+@forward "@/styles/fonts.scss";
+
+.project_div {
+    background-color: black;
+    position: absolute;
+    width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @keyframes AppereanceButtonBack {
+        0% {
+            transform: translateX(-5vw);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .project_div__info {
+        width: 1000px;
+        position: relative;
+        top: 20px;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        padding-top: 15px;
+
+        .info__side_div {
+            display: flex;
+            flex-direction: column;
+
+            &:last-of-type {
+                padding-left: 20px;
+                align-items: center;
+            }
+
+            .side_div__name {
+                font-family: 'Capture Smallz';
+                margin: 0;
+                color: rgba(var(--color), 0.7);
+            }
+
+            .side_div__description {
+                font-family: 'EasyFontSteel';
+                font-size: 16px;
+                font-style: italic;
+                word-break: break-all;
+                color: rgba(var(--color), 0.6);
+            }
+
+            .side_div__link {
+                color: rgba(var(--color), 0.5);
+                text-decoration: none;
+                margin-bottom: 15px;
+                word-break: break-all;
+                font-family: 'Papyrus';
+                font-weight: 900;
+                text-decoration: underline;
+
+                &:hover {
+                    color: rgb(var(--color));
+                }
+            }
+
+            .side_div__stack {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                row-gap: 10px;
+                column-gap: 10px;
+                justify-content: center;
+
+                .stack_el {
+                    width: 60px;
+                    height: 60px;
+                    background-color: rgba(var(--color), 0.1);
+                    border: 1px solid rgb(var(--color));
+                    color: rgb(var(--color));
+                    display: grid;
+                    place-items: center;
+                    border-radius: 5px;
+                    font-family: 'Piksieli Prst';
+                    font-size: 10px;
+                    letter-spacing: 1px;
+                }
+            }
+        }
+    }
+
+    .project_div__delete_project {
+        width: 3%;
+        aspect-ratio: 1/1;
+        background-color: rgba(255, 0, 0, 0.226);
+        border-radius: 15%;
+        position: absolute;
+        left: 5%;
+        bottom: 5%;
+        background-image: url(/images/delete.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+        cursor: pointer;
+        border: 1px solid red;
+        z-index: 3;
+
+        &:hover {
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+
+        &:active {
+            background-color: rgba(255, 0, 0, 0.6);
+        }
+    }
+
+    .project_div__loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%), translateX(-50%);
+    }
+}
+
+
+@media (width < 1200px) {
+    .project_div__info {
+        width: 800px !important;
+    }
+}
+
+
+@media (width < 1100px) {
+    .project_div__info {
+        grid-template-columns: 100% !important;
+        justify-items: center;
+
+        .info__side_div:nth-child(1) {
+            width: 70%;
+        }
+
+        .info__side_div:nth-child(2) {
+            flex-direction: column-reverse !important;
+            margin-top: 30px;
+            row-gap: 20px;
+            padding-left: 0 !important;
+        }
+    }
+}
+
+@media (width < 900px) {
+    .project_div__info {
+        width: 600px !important;
+    }
+}
+
+@media (width < 650px) {
+    .project_div__info {
+        width: 400px !important;
+
+        .info__side_div:nth-child(2) {
+            margin-top: 10px;
+        }
+
+        .info__side_div {
+            .side_div__name {
+                font-size: 16px;
+            }
+
+            .side_div__description {
+                font-size: 12px !important;
+            }
+
+            .side_div__link {
+                font-size: 12px;
+            }
+        }
+
+        .stack_el {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 8px !important;
+        }
+    }
+}
+
+@media (width < 450px) {
+    .project_div__info {
+        width: 65vw !important;
+
+        .info__side_div:nth-child(1) {
+            width: 100%;
+        }
+    }
+}

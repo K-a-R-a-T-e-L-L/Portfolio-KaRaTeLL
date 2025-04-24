@@ -1,0 +1,109 @@
+.section {
+    width: 100%;
+    height: auto;
+    max-height: 800px;
+    min-height: 300px;
+    display: grid;
+    grid-template-rows: 50% 50%;
+
+    .section__image_div {
+        position: relative;
+        background-color: black;
+        box-shadow: 0 0 30px 15px black;
+        border-radius: 100%;
+
+        @keyframes AppereanceImage {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .image_div__img {
+            object-fit: contain;
+            filter: drop-shadow(0px 0px 20px black);
+            animation: AppereanceImage 3s ease;
+        }
+    }
+
+    .section__info_div {
+        .info_div__h1 {
+            font-size: 24px;
+            text-align: center;
+            padding: 0 5px;
+            font-family: 'Oswald';
+            z-index: 1;
+            position: relative;
+
+            @keyframes PointerPrintingAnimation {
+
+                from,
+                to {
+                    color: transparent;
+                }
+
+                50% {
+                    color: white;
+                }
+            }
+
+            @mixin PrintingPointer ($animation) {
+                color: white;
+                font-weight: 100;
+                animation: $animation;
+            }
+
+            .h1__printing_pointer {
+                @include PrintingPointer(none);
+            }
+
+            .h1__printing_pointer_active {
+                @include PrintingPointer(PointerPrintingAnimation 1s step-end infinite);
+            }
+        }
+    }
+}
+
+@media (width < 1100px) {
+    .section {
+        grid-template-rows: 80% 20%;
+    }
+}
+
+@media (width < 600px) {
+    .section {
+        grid-template-rows: 80% 20%;
+
+        .section__info_div {
+            .info_div__h1 {
+                width: 90%;
+                font-size: 22px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}
+
+@media (width < 400px) {
+    .section {
+        .section__info_div {
+            .info_div__h1 {
+                font-size: 17px;
+            }
+        }
+    }
+}
+
+@media (width < 300px) {
+    .section {
+        .section__info_div {
+            .info_div__h1 {
+                font-size: 18px;
+            }
+        }
+    }
+}

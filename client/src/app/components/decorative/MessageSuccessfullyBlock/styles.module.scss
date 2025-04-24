@@ -1,0 +1,18 @@
+.succesfully {
+    color: white;
+    text-align: center;
+}
+
+.succesfully_button {
+    color: aquamarine;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background-color: rgb(1, 20, 31);
+    cursor: pointer;
+    border: 1px solid rgb(0, 147, 147);
+    border-radius: 5px;
+    margin-top: 5px;
+}

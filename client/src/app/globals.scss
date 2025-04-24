@@ -1,0 +1,83 @@
+@forward "@/styles/fonts.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: black;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 1488px;
+  max-height: 740px;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  position: relative;
+
+  nextjs-portal {
+    display: none;
+  }
+}
+
+.div {
+  width: 100%;
+  max-height: 100vh;
+  height: 100%;
+
+  .div__main {
+    height: calc(100% - 60px);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    overflow: auto;
+    padding-top: 30px;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 255, 0.415);
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 255, 255, 0.529);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: black;
+      border-radius: 6px;
+    }
+  }
+}
+
+@media (width < 1100px) {
+  .div__main {
+    grid-template-columns: 100% !important;
+    grid-template-rows: minmax(300px, auto) 1fr;
+  }
+}

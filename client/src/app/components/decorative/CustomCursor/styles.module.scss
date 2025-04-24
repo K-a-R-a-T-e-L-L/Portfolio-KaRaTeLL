@@ -1,0 +1,20 @@
+.custom_cursor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 100%;
+    position: absolute;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.center {
+    width: 5px;
+    height: 5px;
+    background-color: aqua;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 999;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}

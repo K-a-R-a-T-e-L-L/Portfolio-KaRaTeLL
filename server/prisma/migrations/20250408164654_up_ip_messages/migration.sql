@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "MessagesIP" ALTER COLUMN "date" SET DATA TYPE TEXT;

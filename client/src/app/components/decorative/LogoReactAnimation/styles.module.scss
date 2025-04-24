@@ -1,0 +1,53 @@
+@keyframes SpinAtom {
+    0% {
+        rotate: 0deg;
+    }
+
+    100% {
+        rotate: 180deg;
+    }
+}
+
+.logo {
+    border-radius: 20%;
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+
+    @mixin Axis ($rotate) {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        transform: $rotate;
+        position: absolute
+    }
+
+    .logo__axis_one {
+        @include Axis(rotateX(65deg));
+        animation: SpinAtom 1s ease;
+    }
+
+    .logo__axis_two {
+        @include Axis(rotateY(65deg) rotateX(25deg));
+        animation: SpinAtom 1s ease;
+    }
+
+    .logo__axis_three {
+        @include Axis(rotateY(65deg) rotateX(-25deg));
+        animation: SpinAtom 1s ease;
+    }
+
+    .logo__center {
+        width: 20%;
+        height: 20%;
+        border-radius: 100%;
+        background-color: aqua;
+        margin: 0 0 0 0;
+        padding: 0;
+        box-sizing: border-box;
+        position: absolute;
+    }
+}

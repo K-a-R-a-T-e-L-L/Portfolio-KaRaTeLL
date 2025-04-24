@@ -1,0 +1,390 @@
+.article {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    @keyframes AnimationAppereanceH2 {
+        0% {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }
+
+    .article__h2 {
+        text-align: center;
+        height: 60px;
+        width: 100%;
+        font-size: 40px;
+        margin-bottom: 30px;
+        overflow: hidden;
+        font-family: 'TrueTypeWriter PoliglOTT';
+
+        span {
+            display: block;
+            animation: AnimationAppereanceH2 1s ease;
+        }
+    }
+
+    @keyframes AppereanceP {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .article__p {
+        text-align: justify;
+        width: 60%;
+        padding-right: 20px;
+        font-size: 20px;
+        font-family: 'EasyFontSteel';
+        color: rgb(178, 178, 178);
+        font-weight: 300;
+        opacity: 0;
+        animation: AppereanceP ease-in 1;
+        animation-fill-mode: forwards;
+        animation-duration: 1s;
+    }
+
+    @keyframes AppereanceImage {
+        0% {
+            scale: 0.5;
+        }
+
+        100% {
+            scale: 1;
+        }
+    }
+
+    .article__image {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        display: grid;
+        place-items: center;
+        animation: AppereanceImage 0.5s ease-in-out;
+
+        .image__signature {
+            font-size: 10px;
+            position: absolute;
+            bottom: -18px;
+            opacity: 0.7;
+        }
+
+        @mixin ButtonViewImg ($img, $bottom, $right, $size) {
+            width: $size;
+            height: $size;
+            position: absolute;
+            bottom: $bottom;
+            right: $right;
+            z-index: 1;
+            background-image: url("/images/#{$img}.png");
+            background-size: 100% 100%;
+            background-color: black;
+            border-radius: 10%;
+            border: 1px solid white;
+            opacity: 0.7;
+            transition: scale 0.3s ease;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:focus-visible {
+                opacity: 1;
+                outline: 2px solid black;
+            }
+
+            &:active {
+                scale: 0.9;
+            }
+        }
+
+        .image__button_open {
+            @include ButtonViewImg(fullScreen, 5px, 15px, 30px);
+        }
+
+        .image__button_close {
+            @include ButtonViewImg(screen, auto, 2%, 60px);
+        }
+    }
+
+    .article__image_full {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        display: grid;
+        place-items: center;
+        animation: AppereanceImage 0.5s ease-in-out;
+
+        .image__signature {
+            font-size: 10px;
+            position: absolute;
+            bottom: -18px;
+            opacity: 0.7;
+        }
+
+        @mixin ButtonViewImg ($img, $bottom, $right, $size) {
+            width: $size;
+            height: $size;
+            position: absolute;
+            bottom: $bottom;
+            right: $right;
+            z-index: 1;
+            background-image: url("/images/#{$img}.png");
+            background-size: 100% 100%;
+            background-color: black;
+            border-radius: 10%;
+            border: 1px solid white;
+            opacity: 0.7;
+            transition: scale 0.3s ease;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:focus-visible {
+                opacity: 1;
+                outline: 2px solid black;
+            }
+
+            &:active {
+                scale: 0.9;
+            }
+        }
+
+        .image__button_open {
+            @include ButtonViewImg(fullScreen, 5px, 15px, 30px);
+        }
+
+        .image__button_close {
+            @include ButtonViewImg(screen, auto, 2%, 60px);
+        }
+    }
+
+    @keyframes AppereanceImageFull {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .article__image_full {
+        position: absolute;
+        min-width: 100vw;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        animation: AppereanceImage 0.5s ease-in-out;
+        background-color: black;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        animation: AppereanceImageFull 0.5s ease;
+
+        .image__signature {
+            font-size: 10px;
+            position: absolute;
+            bottom: -18px;
+            opacity: 0.7;
+        }
+
+        @mixin ButtonViewImg ($img, $bottom, $right, $size) {
+            width: $size;
+            height: $size;
+            position: absolute;
+            bottom: $bottom;
+            right: $right;
+            z-index: 1;
+            background-image: url("/images/#{$img}.png");
+            background-size: 100% 100%;
+            background-color: black;
+            border-radius: 10%;
+            border: 1px solid white;
+            opacity: 0.7;
+            transition: scale 0.3s ease;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:focus-visible {
+                opacity: 1;
+                outline: 2px solid black;
+            }
+
+            &:active {
+                scale: 0.9;
+            }
+        }
+
+        .image__button_open {
+            @include ButtonViewImg(fullScreen, 5px, 15px, 30px);
+        }
+
+        .image__button_close {
+            @include ButtonViewImg(screen, auto, 2%, 60px);
+        }
+    }
+}
+
+@media (width < 1215px) {
+    .article {
+        .article__image {
+            width: 250px;
+
+            .image__button_open {
+                bottom: 20px;
+                right: 10px;
+            }
+        }
+    }
+}
+
+@media (width < 1200px) {
+    .article {
+        .article__h2 {
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .article__p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+    }
+}
+
+@media (width < 1100px) {
+    .article {
+        width: 70%;
+    }
+}
+
+@media (width < 1040px) {
+    .article {
+        justify-content: center;
+
+        .article__p {
+            width: 100%;
+            text-align: center;
+        }
+
+        .article__image {
+            width: 300px;
+
+            .image__button_open {
+                bottom: 10px;
+                right: 20px;
+            }
+        }
+    }
+}
+
+@media (width < 900px) {
+    .image__button_close {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
+@media (width < 850px) {
+    .article {
+        .article__h2 {
+            font-size: 30px;
+            position: relative;
+            top: 10px;
+            margin-bottom: 0px;
+        }
+
+        .article__p {
+            font-size: 16px;
+        }
+    }
+}
+
+@media (width < 750px) {
+    .article {
+        .article__h2 {
+            font-size: 25px;
+        }
+
+        .article__p {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (width < 700px) {
+    .image__button_close {
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+
+@media (width < 600px) {
+    .article {
+        width: 90%;
+        margin-top: 10px;
+
+        .article__h2 {
+            font-size: 18px;
+            margin-bottom: 0px;
+            top: 20px;
+        }
+
+        .article__p {
+            font-size: 10px;
+            padding: 0 30px;
+            width: 100%;
+        }
+
+        .article__image {
+            height: 150px;
+
+            .image__button_open {
+                right: 53px;
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+}
+
+@media (width < 500px) {
+    .image__button_close {
+        width: 30px !important;
+        height: 30px !important;
+    }
+}
+
+@media (width < 330px) {
+    .article {
+        .article__image {
+            width: 250px;
+
+            .image__signature {
+                font-size: 9px;
+                bottom: -20px;
+            }
+
+            .image__button_open {
+                right: 25px;
+            }
+        }
+    }
+}
