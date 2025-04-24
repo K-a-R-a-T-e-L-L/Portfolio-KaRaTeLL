@@ -9,7 +9,7 @@ import MessageErrorBlock from '../../decorative/MessageErrorBlock';
 const Skills = () => {
 
     const [ArraySkills, setArraySkills] = useState<{ id: number, value: string, active: boolean }[]>([]);
-    const {TokenCookie, deleteTokenCookie} = useCookie('token', '', '/', 600);
+    const { TokenCookie, deleteTokenCookie } = useCookie('token', '', '/', 600);
     const { setToken, Token, TokenDecode, setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [ValueSkill, setValueSkill] = useState<string>('');
 
@@ -109,25 +109,24 @@ const Skills = () => {
     };
 
     useEffect(() => {
-        if (ArraySkills?.length === 0) {
-            setLoading(true);
-            axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/getSkills`)
-                .then((res) => {
-                    setArraySkills(res.data);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (axios.isAxiosError(error)) {
-                        switch (error.response?.status) {
-                            default:
-                                setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
-                                break;
-                        };
-                    }
-                })
-                .finally(() => setLoading(false));
-        }
-    }, [ArraySkills, setLoading, setMessageError]);
+        setLoading(true);
+        axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/getSkills`)
+            .then((res) => {
+                setArraySkills(res.data);
+            })
+            .catch((error) => {
+                console.error(error);
+                if (axios.isAxiosError(error)) {
+                    switch (error.response?.status) {
+                        default:
+                            setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
+                            break;
+                    };
+                }
+            })
+            .finally(() => setLoading(false));
+            // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         if (TokenCookie) {
@@ -173,7 +172,7 @@ const Skills = () => {
                                         )}
                                     </li>
                                 )
-                            }) : (<p style={{position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px'}}>Навыков не найдено!!!</p>)}
+                            }) : (<p style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px' }}>Навыков не найдено!!!</p>)}
                             {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && (
                                 <div className={style.skills__adding_skill}>
                                     <input className={style.adding_skill__input} id='new-skill' type="text" placeholder='skill' value={ValueSkill} onChange={(e) => handleValueSkill(e)} />
@@ -196,7 +195,7 @@ const Skills = () => {
                                         )}
                                     </li>
                                 )
-                            )  : (<p style={{position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px'}}>Навыков в стэке пока нет!!!</p>)}
+                            ) : (<p style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px' }}>Навыков в стэке пока нет!!!</p>)}
                         </div>
                     </div>
                 </article>

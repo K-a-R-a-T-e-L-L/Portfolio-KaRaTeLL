@@ -1,5 +1,5 @@
 import style from './styles.module.scss';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import useTokenValid from '@/hooks/useTokenValid/useTokenValid';
 import LoadingCirle from '../../decorative/LoadingCirle/LoadingCirle';
@@ -33,8 +33,7 @@ const Projects = () => {
     const { setToken, TokenDecode, setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [ArrayProjects, setArrayProjects] = useState<ArrayProjectsType>([]);
 
-    const handleGettingProjects = useCallback(() => {
-        if (ArrayProjects?.length === 0) {
+    const handleGettingProjects = () => {
             setLoading(true);
             axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/projects/getProjects`)
                 .then((res) => {
@@ -51,12 +50,12 @@ const Projects = () => {
                     }
                 })
                 .finally(() => { setLoading(false); });
-        };
-    }, [ArrayProjects, setLoading, setMessageError]);
+    };
 
     useEffect(() => {
         handleGettingProjects();
-    }, [handleGettingProjects]);
+         // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         if (TokenCookie) {
