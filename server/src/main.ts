@@ -18,7 +18,7 @@ async function bootstrap() {
   app.set('trust proxy', true);
 
   app.enableCors({
-    origin: JSON.parse(process.env.ALLOWED_DOMAINS as string) || [],
+    origin:  JSON.parse(process.env.ALLOWED_DOMAINS as string) || [],
     methods: 'GET,POST,DELETE, PUT',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
