@@ -1,4 +1,4 @@
-//authorization/form.tsx
+//authorization/login.tsx
 export interface CustomError extends Error {
     status?: number;
 };
@@ -12,8 +12,16 @@ export type TokenDecodeType = {
     sub: number
 };
 
-export type WarnInputsType = {
+export type WarnInputsTypeLogin = {
     login: string,
+    password: string
+};
+
+
+//authorization/login.tsx
+export type WarnInputsTypeRegister = {
+    email: string,
+    number: string,
     password: string
 };
 

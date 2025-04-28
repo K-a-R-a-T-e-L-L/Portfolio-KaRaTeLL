@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post, Req, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Logger, Post, Req, UnauthorizedException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request } from 'express';
 import { MessageService } from './message.service';
 import { CreateMessageDTO } from './create-message.dto';
@@ -10,22 +10,11 @@ export class MessageController {
 
   @Post('send')
   @UsePipes(new ValidationPipe())
-  async messageSend(@Body() createMessageDTO: CreateMessageDTO, @Req() req: Request) {
-    let ip = req.headers['x-forwarded-for'] as string;
+  async messageSend(@Body() createMessageDTO: CreateMessageDTO, @Req() req: Request ) {
 
-    if (ip) {
-      ip = ip.split(',')[0].trim();
-    } else if (req.socket?.remoteAddress) {
-      ip = req.socket.remoteAddress;
-    } else if (req.ip) {
-      ip = req.ip;
-    } else {
-      ip = 'unknown';
-      this.logger.warn('Не удалось определить IP-адрес клиента.');
-    }
-
-    this.logger.debug(`Получен IP-адрес: ${ip}`);
+    const BearerToken = req.headers.authorization?.split(' ')[1];
+    if(!BearerToken) throw new UnauthorizedException('Invalid token');
     
-    return this.messageService.messageSend(ip, createMessageDTO.name, createMessageDTO.contacts, createMessageDTO.message);
+    return this.messageService.messageSend(createMessageDTO.name, createMessageDTO.contacts, createMessageDTO.message, BearerToken);
   }
 }

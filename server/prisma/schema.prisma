@@ -7,14 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id       Int    @id @default(autoincrement())
   email    String @unique
   number   String @unique
+  role     String
   password String @unique
 }
 
-model Project {
+model Projects {
   id              Int       @id @default(autoincrement())
   name            String
   link            String
@@ -26,15 +27,16 @@ model Project {
   view            Boolean[]
 }
 
-model Skill {
+model Skills {
   id     Int     @id @default(autoincrement())
   value  String
   active Boolean
 }
 
-model MessagesIP {
+model UserMessages {
   id       Int        @id @default(autoincrement())
-  ip       String     @unique
+  email    String
+  number   String
   name     String
   contacts String
   messages Messages[]
@@ -42,8 +44,8 @@ model MessagesIP {
 }
 
 model Messages {
-  id           Int        @id @default(autoincrement())
-  message      String
-  messagesIPID Int
-  messagesIP   MessagesIP @relation(fields: [messagesIPID], references: [id], onDelete: Cascade)
+  id             Int          @id @default(autoincrement())
+  message        String
+  messagesUserID Int
+  messagesUser   UserMessages @relation(fields: [messagesUserID], references: [id], onDelete: Cascade)
 }

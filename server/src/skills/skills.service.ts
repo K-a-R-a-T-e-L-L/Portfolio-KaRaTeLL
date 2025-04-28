@@ -1,16 +1,16 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateSkillDto } from './create-skill.dto';
+import { CreateSkillsDto } from './create-skills.dto';
 
 @Injectable()
-export class SkillService {
+export class SkillsService {
     constructor(private prisma: PrismaService) { }
 
-    async addingSkill(createSkillDto: CreateSkillDto) {
-        const { value, active } = createSkillDto;
+    async addingSkill(createSkillsDto: CreateSkillsDto) {
+        const { value, active } = createSkillsDto;
         if (!value) throw new ConflictException("Enter the correct information!!!")
         try {
-            return await this.prisma.skill.create({
+            return await this.prisma.skills.create({
                 data: {
                     value,
                     active
@@ -25,7 +25,7 @@ export class SkillService {
 
     async getSkills() {
         try {
-            const skills = await this.prisma.skill.findMany();
+            const skills = await this.prisma.skills.findMany();
             return skills;
         }
         catch (error) {
@@ -36,20 +36,20 @@ export class SkillService {
 
     async updateActive(id) {
         try {
-            const skill = await this.prisma.skill.findUnique({
+            const skill = await this.prisma.skills.findUnique({
                 where: { id }
             });
 
             if (!skill) throw new NotFoundException(`When trying to upgrade, the skill with the ${id} was not found!!!`);
 
-            await this.prisma.skill.update({
+            await this.prisma.skills.update({
                 where: {id},
                 data: {
                     active: !skill.active
                 }
             });
 
-            return await this.prisma.skill.findUnique({
+            return await this.prisma.skills.findUnique({
                 where: { id }
             });
         }
@@ -61,13 +61,13 @@ export class SkillService {
 
     async deleteSkill(id) {
         try {
-            const skill = await this.prisma.skill.findUnique({
+            const skill = await this.prisma.skills.findUnique({
                 where: { id }
             });
 
             if (!skill) throw new NotFoundException(`The skill with the ID ${id} was not found when trying to delete it!!!`);
 
-            await this.prisma.skill.delete({
+            await this.prisma.skills.delete({
                 where: { id }
             });
 

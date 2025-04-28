@@ -1,6 +1,6 @@
 import { IsBoolean, IsString } from "class-validator";
 
-export class CreateSkillDto {
+export class CreateSkillsDto {
     @IsString()
     value: string;
 

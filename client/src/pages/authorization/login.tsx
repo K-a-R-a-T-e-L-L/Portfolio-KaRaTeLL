@@ -9,7 +9,7 @@ import ButtonExit from '@/app/components/decorative/ButtonExit';
 import ButtonBack from '@/app/components/decorative/ButtonBack';
 import useCookie from '@/hooks/useCookie/useCookie';
 import MessageErrorBlock from '@/app/components/decorative/MessageErrorBlock';
-import { CustomError, TokenDecodeType, WarnInputsType } from '@/types.global';
+import { CustomError, TokenDecodeType, WarnInputsTypeLogin } from '@/types.global';
 import { GetServerSidePropsContext } from 'next';
 
 const Form = ({ token }: { token: string }) => {
@@ -19,7 +19,7 @@ const Form = ({ token }: { token: string }) => {
     const { setToken, TokenDecode, setTokenDecode, Loading, setLoading, MessageError, setMessageError } = useTokenValid(TokenCookie ? TokenCookie : token || '', deleteTokenCookie);
     const [Login, setLogin] = useState<string>('');
     const [Password, setPassword] = useState<string>('');
-    const [WarnInputs, setWarnInputs] = useState<WarnInputsType>({ login: '', password: '' });
+    const [WarnInputs, setWarnInputs] = useState<WarnInputsTypeLogin>({ login: '', password: '' });
     const RefAvatar = useRef<HTMLDivElement>(null);
     const RefInputL = useRef<HTMLInputElement>(null);
     const RefInputP = useRef<HTMLInputElement>(null);
@@ -63,7 +63,6 @@ const Form = ({ token }: { token: string }) => {
                     const decodedToken: TokenDecodeType = jwtDecode(accessToken);
                     setTokenDecode(decodedToken);
                     if (decodedToken.exp > Date.now() / 1000) {
-                        if (decodedToken.role !== process.env.NEXT_PUBLIC_ROLE) { setMessageError('Вы не являетесь владельцем!!!'); return; }
                         updateTokenCookie(accessToken);
                         setMessageError('');
                         window.location.href = '/';
@@ -161,7 +160,7 @@ const Form = ({ token }: { token: string }) => {
                     ) : (
                         <>
                             {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE ? (
-                                <h1 className={style.form__h1}>Вы успешно вошли в аккаунт</h1>
+                                <h1 className={style.form__h1}>Вы успешно вошли в аккаунт ! {':)'}</h1>
                             ) : (
                                 <>
                                     <div className={style.form__div_input}>

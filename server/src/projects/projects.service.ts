@@ -1,11 +1,10 @@
 import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateProjectDto } from './create-project.dto';
 import { unlinkSync } from 'fs';
 import { join } from 'path';
 
 @Injectable()
-export class ProjectService {
+export class ProjectsService {
     constructor(private prisma: PrismaService) { }
 
     async addingProject(data) {
@@ -27,7 +26,7 @@ export class ProjectService {
         };
 
         try {
-            return await this.prisma.project.create({
+            return await this.prisma.projects.create({
                 data: {
                     name: name,
                     link: link,
@@ -55,7 +54,7 @@ export class ProjectService {
 
     async getProjects() {
         try {
-            const projects = await this.prisma.project.findMany();
+            const projects = await this.prisma.projects.findMany();
             return projects.map((project) => ({
                 ...project,
                 URLImages: JSON.parse(project.URLImages as string),
@@ -70,7 +69,7 @@ export class ProjectService {
 
     async getProject(id: number) {
         try {
-            let project = await this.prisma.project.findUnique({
+            let project = await this.prisma.projects.findUnique({
                 where: { id: id },
             });
             if (!project) throw new NotFoundException(`Project with ID ${id} not found!!!`);
@@ -88,7 +87,7 @@ export class ProjectService {
 
     async deleteProject(id: number) {
         try {
-            const project = await this.prisma.project.findUnique({
+            const project = await this.prisma.projects.findUnique({
                 where: { id: id }
             });
 
@@ -109,7 +108,7 @@ export class ProjectService {
                 })
             };
 
-            await this.prisma.project.delete({
+            await this.prisma.projects.delete({
                 where: { id: id }
             });
 

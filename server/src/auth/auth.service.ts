@@ -1,25 +1,44 @@
 import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private prisma: PrismaService, private jwtService: JwtService) {};
+    constructor(private prisma: PrismaService, private jwtService: JwtService) { };
 
-    async register(email: string, number: string, password: string): Promise<User> {
+    async register(email: string, number: string, password: string) {
         const hashedPassword = await bcrypt.hash(password, 12);
+
+        const role = email === process.env.ADMIN_EMAIL as string || number === process.env.ADMIN_TELEPHONE as string ? process.env.ADMIN_ROLE as string : 'User';
+
         try {
-            return await this.prisma.user.create({
+            await this.prisma.users.create({
                 data: {
                     email,
                     number,
+                    role,
                     password: hashedPassword
                 }
-            })
+            });
+
+            const currentUser = await this.prisma.users.findFirst({
+                where: {
+                    OR: [
+                        { email: email },
+                        { number: number }
+                    ]
+                }
+            });
+
+            if(!currentUser) throw new UnauthorizedException('Registration error!!!');;
+
+            const payload = { sub: currentUser.id, email: currentUser.email, number: currentUser.number, role: currentUser.role };
+
+            return {
+                access_token: this.jwtService.sign(payload)
+            };
         }
         catch (error) {
             console.error(error);
@@ -29,7 +48,7 @@ export class AuthService {
     };
 
     async login(login: string, password: string): Promise<{ access_token: string }> {
-        const currentUser = await this.prisma.user.findFirst({
+        const currentUser = await this.prisma.users.findFirst({
             where: {
                 OR: [
                     { email: login },
@@ -41,10 +60,8 @@ export class AuthService {
 
         const verifiedUser = await bcrypt.compare(password, currentUser.password) ? currentUser : null;
         if (!verifiedUser) throw new UnauthorizedException('Invalid password!!!');
-        
-        const role = verifiedUser.email === process.env.ADMIN_EMAIL as string || verifiedUser.number === process.env.ADMIN_TELEPHONE as string ? process.env.ADMIN_ROLE as string : 'User';
 
-        const payload = { sub: verifiedUser.id, email: verifiedUser.email, number: verifiedUser.number, role: role };
+        const payload = { sub: verifiedUser.id, email: verifiedUser.email, number: verifiedUser.number, role: verifiedUser.role };
 
         return {
             access_token: this.jwtService.sign(payload)

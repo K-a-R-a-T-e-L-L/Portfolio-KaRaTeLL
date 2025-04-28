@@ -120,7 +120,7 @@ export class BotService implements OnModuleInit {
 
         this.bot.onText(/\/get_senders|Получить список отправителей/i, async () => {
             try {
-                const senders = await this.prisma.messagesIP.findMany({
+                const senders = await this.prisma.userMessages.findMany({
                     select: {
                         id: true,
                         name: true,
@@ -221,7 +221,7 @@ export class BotService implements OnModuleInit {
                 };
 
                 try {
-                    const sender = await this.prisma.messagesIP.findUnique({
+                    const sender = await this.prisma.userMessages.findUnique({
                         where: { id: senderID },
                         include: { messages: true }
                     });
@@ -233,6 +233,8 @@ export class BotService implements OnModuleInit {
 
                     let res = `ℹ️ Подробная информация об отправителе ${sender.name} (ID: ${sender.id})\n------------------------------------------\n`;
                     res += `👤 Имя: ${sender.name}\n------------------------------------------\n`;
+                    res += `👤 Email: ${sender.email}\n------------------------------------------\n`;
+                    res += `👤 Номер телефона: ${sender.number}\n------------------------------------------\n`;
                     res += `📞 Контакты: ${sender.contacts}\n------------------------------------------\n`;
                     res += `💬 Сообщения:\n`;
 
@@ -285,7 +287,7 @@ export class BotService implements OnModuleInit {
                 };
 
                 try {
-                    const sender = await this.prisma.messagesIP.findUnique({
+                    const sender = await this.prisma.userMessages.findUnique({
                         where: { id: senderID }
                     });
 
@@ -341,7 +343,7 @@ export class BotService implements OnModuleInit {
                 };
 
                 try {
-                    const sender = await this.prisma.messagesIP.findUnique({
+                    const sender = await this.prisma.userMessages.findUnique({
                         where: { id: senderID }
                     });
 
@@ -352,7 +354,7 @@ export class BotService implements OnModuleInit {
 
                     try {
                         if (messageID) {
-                            await this.prisma.messagesIP.delete({
+                            await this.prisma.userMessages.delete({
                                 where: { id: sender.id },
                                 include: { messages: true }
                             });
@@ -393,7 +395,7 @@ export class BotService implements OnModuleInit {
                 try {
                     if (messageID) {
                         let res = `✅ База данных очищена! 👌🗑️\nИнформации об отправителях больше нет! Начнем с чистого листа! 📝`;
-                        await this.prisma.messagesIP.deleteMany({});
+                        await this.prisma.userMessages.deleteMany({});
                         await this.editMessage(this.chatID, messageID, res);
                     }
                     else {

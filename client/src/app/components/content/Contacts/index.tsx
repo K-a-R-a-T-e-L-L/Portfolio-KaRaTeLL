@@ -9,11 +9,12 @@ import LoadingCirle from '../../decorative/LoadingCirle/LoadingCirle';
 import MessageErrorBlock from '../../decorative/MessageErrorBlock';
 import MessageSuccessfullyBlock from '../../decorative/MessageSuccessfullyBlock';
 import { ArrayContactsType, InputsDataType } from './types';
+import Link from 'next/link';
 
 const Contacts = () => {
 
-    const {TokenCookie, deleteTokenCookie} = useCookie('token', '', '/', 600);
-    const { setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
+    const { TokenCookie, deleteTokenCookie } = useCookie('token', '', '/', 600);
+    const { Token, setToken, TokenDecode, setLoading, Loading, setMessageError, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [AnimationPlaceholderName] = usePrintingTextAnimation(['Ваше имя'], 100, 'null');
     const [AnimationPlaceholderContacts] = usePrintingTextAnimation(['Ваши контакты'], 100, 'null');
     const [AnimationPlaceholderMessage] = usePrintingTextAnimation(['Сообщение'], 100, 'null');
@@ -35,7 +36,7 @@ const Contacts = () => {
 
     const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         if (ValuesInputs.name === '' || ValuesInputs.name.length < 3 || ValuesInputs.name.length > 150) {
             setWarnInputs((prevState) => {
                 const newPrevState = { ...prevState };
@@ -60,15 +61,19 @@ const Contacts = () => {
             });
             return;
         };
-        
+
         setLoading(true);
-        
-        axios.post(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/message/send`, ValuesInputs)
+
+        axios.post(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/message/send`, ValuesInputs, {
+            headers: {
+                Authorization: `Bearer ${Token}`
+            }
+        })
             .then(() => {
                 setWarnInputs({ name: '', contacts: '', message: '' });
                 setValuesInputs({ name: '', contacts: '', message: '' });
                 setMessageError("");
-                setSuccessfullySendMessage('Сообщение успешно отправлено! Их можно отправлять не чаще чем раз в сутки) ');
+                setSuccessfullySendMessage('Сообщение успешно отправлено! В ближайшее время с вами свяжуться :) Отправлять смс можно не чаще чем раз в сутки) ');
             })
             .catch((error) => {
                 console.error(error);
@@ -79,6 +84,9 @@ const Contacts = () => {
                             break;
                         case 400:
                             setMessageError('Отправляемые данные не соответствуют по кол-ву символов!!!');
+                            break;
+                            case 401:
+                            setMessageError('Для начала вам следует авторизоваться!!!');
                             break;
                         default:
                             setMessageError('Ошибка сервера при отправки сообщения!!!');
@@ -122,56 +130,72 @@ const Contacts = () => {
         };
     }, [SuccessfullySendMessage]);
 
+    useEffect(() => {
+        if (TokenCookie) {
+            setToken(TokenCookie);
+        };
+    }, [TokenCookie, setToken]);
+
     return (
         <>
             <article className={style.article}>
                 <form className={style.article__form} onSubmit={(e) => handleSend(e)}>
-                    {Loading ? (
-                        <div className={style.form__loading}><LoadingCirle size='7' /></div>
-                    ) : (
-                        SuccessfullySendMessage ? (
-                            <div className={style.form__success}><MessageSuccessfullyBlock successfullyMessage={SuccessfullySendMessage} buttonText='ОК' func={handleCloseSuccessBlock} /></div>
+                    {TokenDecode?.role ? (
+                        Loading ? (
+                            <div className={style.form__loading}><LoadingCirle size='7' /></div>
                         ) : (
-                            <>
-                                <div className={style.form__input}>
-                                    <input
-                                        className={style.input__input}
-                                        minLength={3}
-                                        maxLength={150}
-                                        value={ValuesInputs.name}
-                                        onChange={(e) => handleValuesInputs(e, 'name')}
-                                        type="text"
-                                        placeholder={AnimationPlaceholderName as string}
-                                    />
-                                    {WarnInputs.name !== '' && (<strong>{WarnInputs.name}</strong>)}
-                                </div>
-                                <div className={style.form__input}>
-                                    <input
-                                        className={style.input__input}
-                                        minLength={5}
-                                        maxLength={100}
-                                        value={ValuesInputs.contacts}
-                                        onChange={(e) => handleValuesInputs(e, 'contacts')}
-                                        type="text"
-                                        placeholder={AnimationPlaceholderContacts as string}
-                                    />
-                                    {WarnInputs.contacts !== '' && (<strong>{WarnInputs.contacts}</strong>)}
-                                </div>
-                                <div className={style.form__textarea}>
-                                    <textarea
-                                        className={style.textarea__textarea}
-                                        minLength={10}
-                                        maxLength={1000}
-                                        value={ValuesInputs.message}
-                                        onChange={(e) => handleValuesInputs(e, 'message')}
-                                        name="" id=""
-                                        placeholder={AnimationPlaceholderMessage as string}></
-                                    textarea>
-                                    {WarnInputs.message !== '' && (<strong>{WarnInputs.message}</strong>)}
-                                </div>
-                                <button className={style.form__button} data-interactive="true">Отправить</button>
-                            </>
+                            SuccessfullySendMessage ? (
+                                <div className={style.form__success}><MessageSuccessfullyBlock successfullyMessage={SuccessfullySendMessage} buttonText='ОК' func={handleCloseSuccessBlock} /></div>
+                            ) : (
+                                <>
+                                    <div className={style.form__input}>
+                                        <input
+                                            className={style.input__input}
+                                            minLength={3}
+                                            maxLength={150}
+                                            value={ValuesInputs.name}
+                                            onChange={(e) => handleValuesInputs(e, 'name')}
+                                            type="text"
+                                            placeholder={AnimationPlaceholderName as string}
+                                        />
+                                        {WarnInputs.name !== '' && (<strong>{WarnInputs.name}</strong>)}
+                                    </div>
+                                    <div className={style.form__input}>
+                                        <input
+                                            className={style.input__input}
+                                            minLength={5}
+                                            maxLength={100}
+                                            value={ValuesInputs.contacts}
+                                            onChange={(e) => handleValuesInputs(e, 'contacts')}
+                                            type="text"
+                                            placeholder={AnimationPlaceholderContacts as string}
+                                        />
+                                        {WarnInputs.contacts !== '' && (<strong>{WarnInputs.contacts}</strong>)}
+                                    </div>
+                                    <div className={style.form__textarea}>
+                                        <textarea
+                                            className={style.textarea__textarea}
+                                            minLength={10}
+                                            maxLength={1000}
+                                            value={ValuesInputs.message}
+                                            onChange={(e) => handleValuesInputs(e, 'message')}
+                                            name="" id=""
+                                            placeholder={AnimationPlaceholderMessage as string}></
+                                        textarea>
+                                        {WarnInputs.message !== '' && (<strong>{WarnInputs.message}</strong>)}
+                                    </div>
+                                    <button className={style.form__button} data-interactive="true">Отправить</button>
+                                </>
+                            )
                         )
+                    ) : (
+                        <div className={style.form__div_authorization}>
+                            <h1 className={style.div_authorization__title}>Для того чтобы связаться с создателем необходимо зарегестрировать новый аккаунт или войти в существующий !</h1>
+                            <div className={style.div_authorization__buttons}>
+                                <Link href={'authorization/register'} className={style.buttons__button_link} data-interactive="true">Зарегестрироваться</Link>
+                                <Link href={'authorization/login'} className={style.buttons__button_link} data-interactive="true">Войти</Link>
+                            </div>
+                        </div>
                     )}
                 </form>
                 <div className={style.article__div_contacts}>
