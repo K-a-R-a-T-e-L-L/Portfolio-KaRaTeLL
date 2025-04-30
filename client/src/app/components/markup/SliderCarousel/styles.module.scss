@@ -1,5 +1,6 @@
 .slider {
     width: 1000px;
+    min-height: 250px;
     height: 250px;
     position: relative;
     top: 30px;
@@ -74,6 +75,7 @@
 @media (width < 1200px) {
     .slider {
         width: 800px;
+        min-height: 200px;
         height: 200px;
 
         .slider__window {
@@ -99,6 +101,7 @@
 @media (width < 650px) {
     .slider {
         width: 400px;
+        min-height: 150px;
         height: 150px;
 
         .slider__window {

@@ -132,10 +132,16 @@
                 overflow: hidden;
 
                 .description__name {
+                    max-width: 85%;
+                    overflow: hidden;
                     font-size: 20px;
                     font-family: 'Capture Smallz';
                     letter-spacing: 1px;
                     margin: 0;
+                    display: -webkit-box;
+                    line-clamp: 1;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
                 }
 
                 .description__description {
@@ -144,6 +150,12 @@
                     max-width: 80%;
                     font-size: 14px;
                     margin: 0;
+                    word-wrap: break-word;
+                    display: -webkit-box;
+                    line-clamp: 3;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                 }
 
                 @mixin PositionBacgroundImage ($rotate, $right, $bottom, $left) {
@@ -241,6 +253,8 @@
 
     .description__description {
         font-size: 6px !important;
+        line-clamp: 2 !important;
+        -webkit-line-clamp: 2 !important;
     }
 
     .project__box_stack {

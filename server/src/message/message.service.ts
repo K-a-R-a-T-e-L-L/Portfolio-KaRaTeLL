@@ -73,7 +73,7 @@ export class MessageService {
                     await this.prisma.userMessages.create({
                         data: {
                             email: tokenDecode.email,
-                            number: tokenDecode.email,
+                            number: tokenDecode.number,
                             name,
                             contacts,
                             date: new Date().toISOString(),

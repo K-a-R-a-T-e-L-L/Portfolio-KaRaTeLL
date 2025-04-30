@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ CurrentComponent, setCurrentComponent, 
         { en: 'Skills', ru: 'Навыки' },
         { en: 'Projects', ru: 'Проекты' },
         { en: 'Contacts', ru: 'Контакты' },
-        { en: 'Resume', ru: 'Резюме' },
+        // { en: 'Resume', ru: 'Резюме' },
     ];
 
     const handleCurrentComponent = useCallback((value: string) => {
@@ -53,6 +53,10 @@ const Header: React.FC<HeaderProps> = ({ CurrentComponent, setCurrentComponent, 
             setTimeout(() => { setBurgerMenu(false) }, 1400);
         };
     }, [StateBurgerMenu]);
+
+    useEffect(() => {
+        if(WidthWindow > 600 && StateBurgerMenu === true) setStateBurgerMenu(false);
+    }, [WidthWindow, setStateBurgerMenu, StateBurgerMenu]);
 
     return (
         <>

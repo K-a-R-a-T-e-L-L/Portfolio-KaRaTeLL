@@ -63,7 +63,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, edit }) => {
 
             return () => { clearTimeout(timeout) };
         };
-    }, [data, edit])
+    }, [data, edit]);
 
     return (
         <div className={style.project}>

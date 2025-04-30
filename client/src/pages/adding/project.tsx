@@ -25,6 +25,7 @@ const AddingProjects = ({ token }: { token: string }) => {
     const [ValueInputColor, setValueInputColor] = useState<string>('#ffffff');
     const [ValuesInputsImages, setValuesInputsImages] = useState<ValuesInputsImagesType>({ img: [], icon: [] });
     const [ArrayURLImages, setArrayURLImages] = useState<ArrayURLImagesType>({ img: [], icon: [] });
+    const [WarnInputs, setWarnInputs] = useState({ name: '', link: '', images: '', description: '', icons: '', skills: '', skill: '' });
     const [CheckedInputRadio, setCheckedInputRadio] = useState<number>(0);
     const [SuccessfullyAdded, setSuccessfullyAdded] = useState<string>('');
     const [ValuesInputs, setValuesInputs] = useState<ValuesInputsType>({
@@ -160,7 +161,8 @@ const AddingProjects = ({ token }: { token: string }) => {
 
     //Функция добавления значения из поля ввода skills в skills[]
     const handlePushSkill = useCallback(() => {
-        if (ValueInputSkills !== '') {
+        if (ValueInputSkills !== '' && ValueInputSkills.length >= 1 && ValueInputSkills.length <= 30) {
+            setWarnInputs((prevState) => { return { ...prevState, skill: '' } });
             setValuesInputs((prevState) => {
                 const updateSkills = [...prevState.skills];
                 updateSkills.push(ValueInputSkills);
@@ -170,7 +172,7 @@ const AddingProjects = ({ token }: { token: string }) => {
                 };
             });
             setValueInputSkills('');
-        };
+        } else { setWarnInputs((prevState) => { return { ...prevState, skill: 'Введите от 1 до 30 символов !!!' } }) };
     }, [ValueInputSkills]);
 
     //Функция для удаления скилла
@@ -209,6 +211,36 @@ const AddingProjects = ({ token }: { token: string }) => {
     }, [ValuesInputsImages]);
 
     const handleSaveProject = async () => {
+        if (ValuesInputs.name === '' || ValuesInputs.name.length < 3 || ValuesInputs.name.length > 100) {
+            setWarnInputs((prevState => { return { ...prevState, name: 'Введите от 3 до 100 символов !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, name: '' } })); };
+
+        if (ValuesInputs.link === '' || ValuesInputs.link.length < 3 || ValuesInputs.link.length > 255) {
+            setWarnInputs((prevState => { return { ...prevState, link: 'Введите от 3 до 255 символов !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, link: '' } })); };
+
+        if (ValuesInputs.description === '' || ValuesInputs.description.length < 50 || ValuesInputs.description.length > 1000) {
+            setWarnInputs((prevState => { return { ...prevState, description: 'Введите от 50 до 1000 символов !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, description: '' } })); };
+
+        if (!ValuesInputs.images?.img.length || ValuesInputs.images?.img.length < 1 || ValuesInputs.images?.img.length > 10) {
+            setWarnInputs((prevState => { return { ...prevState, images: 'Добавьте от 1 до 10 изображений !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, images: '' } })); };
+
+        if (!ValuesInputs.images?.icon.length || ValuesInputs.images?.icon.length < 1 || ValuesInputs.images?.icon.length > 10) {
+            setWarnInputs((prevState => { return { ...prevState, icons: 'Добавьте от 1 до 3 иконок !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, icons: '' } })); };
+
+        if (!ValuesInputs.skills.length || ValuesInputs.skills.length < 3 || ValuesInputs.skills.length > 20) {
+            setWarnInputs((prevState => { return { ...prevState, skills: 'Добавьте от 3 до 20 технологий !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, skills: '' } })); };
+
         setLoading(true);
         const formData = new FormData();
         formData.append('name', ValuesInputs.name);
@@ -363,25 +395,42 @@ const AddingProjects = ({ token }: { token: string }) => {
                                     <div className={style.project_edit_form__one_block}>
                                         <div className={style.one_block__name}>
                                             <label htmlFor="name">Название *</label>
-                                            <input type="text" id='name' placeholder='_' value={ValuesInputs.name} onChange={(e) => handleValuesInputs(e, 'name')} />
+                                            <input type="text" id='name' placeholder='_' minLength={3} maxLength={100} value={ValuesInputs.name} onChange={(e) => handleValuesInputs(e, 'name')} />
+                                            {WarnInputs.name !== '' && (<strong className={style.strong}>{WarnInputs.name}</strong>)}
                                         </div>
                                         <div className={style.one_block__link}>
                                             <label htmlFor="link">Ссылка *</label>
-                                            <input type="text" id='link' value={ValuesInputs.link} placeholder='_' onChange={(e) => handleValuesInputs(e, 'link')} />
+                                            <input type="text" id='link' minLength={3} maxLength={255} value={ValuesInputs.link} placeholder='_' onChange={(e) => handleValuesInputs(e, 'link')} />
+                                            {WarnInputs.link !== '' && (<strong className={style.strong}>{WarnInputs.link}</strong>)}
                                         </div>
                                         <div className={style.one_block__images}>
                                             <label htmlFor="images-carousel" data-interactive="true" tabIndex={0}>
                                                 Выберите или перетащите изображения и установите одно из них в качестве превью *
                                                 <div>
                                                     {ArrayURLImages?.img?.map((el, i) => {
+                                                        const inputId = `view-img-${i}`;
                                                         return (
-                                                            <div key={i} style={{ backgroundImage: `URL(${el})` }}>
-                                                                <input type="radio" name='view-img' checked={CheckedInputRadio === i} onChange={() => handleValueInputView(i)} />
+                                                            <div key={i} style={{ backgroundImage: `url(${el})` }}>
+                                                                <input type="radio" name='view-img' id={inputId} style={{ display: 'none' }} />
+                                                                <span
+                                                                    className={CheckedInputRadio === i ? `${style.images__radio} ${style.images__radio_active}` : `${style.images__radio}`}
+                                                                    tabIndex={0}
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        const input = document.getElementById(inputId);
+                                                                        if (input) {
+                                                                            input.click();
+                                                                        }
+                                                                        handleValueInputView(i)
+                                                                    }}
+                                                                >
+                                                                </span>
                                                             </div>
                                                         )
                                                     })}
                                                 </div>
                                             </label>
+                                            {WarnInputs.images !== '' && (<strong className={style.strong} style={{ position: 'relative', top: '3px' }}>{WarnInputs.images}</strong>)}
                                             <input type="file" id='images-carousel' onChange={(e) => handleValuesInputImages(e, 'img')} accept='image/*' multiple />
                                         </div>
                                         <div className={style.one_block__position}>
@@ -397,7 +446,8 @@ const AddingProjects = ({ token }: { token: string }) => {
                                     <div className={style.project_edit_form__two_block}>
                                         <div className={style.two_block__description}>
                                             <label htmlFor="description">Описание *</label>
-                                            <textarea name="" id="description" value={ValuesInputs.description} placeholder='_' onChange={(e) => handleValuesInputs(e, 'description')}></textarea>
+                                            <textarea name="" id="description" minLength={50} maxLength={1000} value={ValuesInputs.description} placeholder='_' onChange={(e) => handleValuesInputs(e, 'description')}></textarea>
+                                            {WarnInputs.description !== '' && (<strong className={style.strong}>{WarnInputs.description}</strong>)}
                                         </div>
                                         <div className={style.two_block__icon_background}>
                                             <label htmlFor="icon-background" data-interactive="true" tabIndex={0}>
@@ -411,17 +461,19 @@ const AddingProjects = ({ token }: { token: string }) => {
                                                 </div>
                                             </label>
                                             <input type="file" id='icon-background' onChange={(e) => handleValuesInputImages(e, 'icon')} accept='image/*' multiple maxLength={3} />
+                                            {WarnInputs.icons !== '' && (<strong className={style.strong} style={{ position: 'relative', top: '3px' }}>{WarnInputs.icons}</strong>)}
                                         </div>
                                         <div className={style.two_block__color}>
                                             <input type="color" id='color' value={ValueInputColor} data-interactive="true" onChange={(e) => { handleValuesInputs(e, 'color'); handleValueInputColor(e) }} />
                                             <input type="text" id='color' placeholder='#XXXXXX' value={ValueInputColor} readOnly />
                                         </div>
                                         <div className={style.two_block__skills}>
-                                            <label htmlFor="skills">Навыки</label>
+                                            <label htmlFor="skills">Навыки *</label>
                                             <div className={style.skills__new_skill}>
-                                                <input type="text" id='skills' value={ValueInputSkills} onChange={(e) => handleValueInputSkills(e)} placeholder='_' maxLength={30} />
+                                                <input type="text" id='skills' minLength={1} maxLength={30} value={ValueInputSkills} onChange={(e) => handleValueInputSkills(e)} placeholder='_' />
                                                 <button type='button' data-interactive="true" onClick={handlePushSkill}></button>
                                             </div>
+                                            {WarnInputs.skill !== '' && (<strong className={style.strong}>{WarnInputs.skill}</strong>)}
                                             <div className={style.skills__skill}>
                                                 {ValuesInputs.skills.map((el, i) => {
                                                     return (
@@ -432,6 +484,7 @@ const AddingProjects = ({ token }: { token: string }) => {
                                                     )
                                                 })}
                                             </div>
+                                            {WarnInputs.skills !== '' && (<strong className={style.strong}>{WarnInputs.skills}</strong>)}
                                         </div>
                                         <button className={style.two_block__submit} type='button' onClick={handleSaveProject} data-interactive="true">Сохранить</button>
                                     </div>

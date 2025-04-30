@@ -10,15 +10,15 @@ export class ProjectsService {
     async addingProject(data) {
         const { name, link, description, positioningIcon, color, skills, images, view } = data;
 
-        if (name === '' || link === '' || description === '') {
-            throw new BadRequestException('Required input fields * must be filled in!!!');
+        if (!images.icon || images.icon.length < 1 || images.icon.length > 3) {
+            throw new ConflictException('Add from 1 to 3 icons!!!');
         }
-        else if (!images.icon) {
-            throw new ConflictException('There should be 3 icons added!!!');
+        else if (!images.img || images.img.length < 1 || images.img.length > 10) {
+            throw new ConflictException('Add from 1 to 10 images!!!');
         }
-        else if (!images.img) {
-            throw new ConflictException('At least 1 image must be added!!!');
-        }
+        else if (skills.length < 3 || skills.length > 20) {
+            throw new BadRequestException('Add from 3 to 20 skills!!!');
+        };
 
         const ImagesPaths = {
             img: images.img?.map((file) => file.filename) || [],

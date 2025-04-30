@@ -1,7 +1,7 @@
 .error {
     width: 20vw;
-    max-height: 7vw;
-    aspect-ratio: 3/0.9;
+    max-height: 8vw;
+    aspect-ratio: 3/1;
     overflow: scroll;
     overflow-x: hidden;
     background-color: rgba(255, 0, 0, 0.2);
@@ -58,5 +58,13 @@
         background-color: transparent;
         color: white;
         cursor: pointer;
+    }
+}
+
+@media (width < 1000px) {
+    .error{
+        .error__message{
+            font-size: 1vw !important;
+        }
     }
 }

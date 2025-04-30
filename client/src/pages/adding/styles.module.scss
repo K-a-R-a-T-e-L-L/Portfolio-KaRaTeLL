@@ -8,6 +8,13 @@
     place-items: center;
     position: relative;
 
+    .strong {
+        color: rgb(255, 47, 0);
+        font-size: 8px;
+        letter-spacing: 1px;
+        margin-left: 10px;
+    }
+
     .adding_projects__content {
         width: 95%;
         height: 95%;
@@ -184,6 +191,25 @@
                     &::-webkit-input-placeholder {
                         color: rgba(0, 255, 255, 0.15);
                     }
+
+                    &::-webkit-scrollbar {
+                        width: 3px;
+                        height: 3px;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 255, 255, 0.415);
+                        border-radius: 6px;
+                    }
+
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: rgba(0, 255, 255, 0.529);
+                    }
+
+                    &::-webkit-scrollbar-track {
+                        background: black;
+                        border-radius: 6px;
+                    }
                 }
             }
 
@@ -221,11 +247,6 @@
                             background-size: cover;
                             display: grid;
                             place-items: center;
-
-                            input[type="radio"] {
-                                width: 20px;
-                                height: 20px;
-                            }
                         }
                     }
                 }
@@ -243,6 +264,22 @@
                     @include ImagesAndIconBackgOneBlock();
                     display: flex;
                     align-items: center;
+
+                    .images__radio {
+                        background-color: black;
+                        border: 1px solid aqua;
+                        border-radius: 100%;
+                        width: 20px;
+                        height: 20px;
+                        z-index: 2;
+                    }
+
+                    .images__radio_active {
+                        background-image: url(/images/circle.png);
+                        background-size: 50% 50%;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                    }
                 }
 
                 .one_block__position {

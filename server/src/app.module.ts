@@ -7,7 +7,8 @@ import { MessageModule } from './message/message.module';
 import { BotModule } from './bot/bot.module';
 
 @Module({
-  imports: [AuthModule,
+  imports: [
+    AuthModule,
     ProjectsModule,
     SkillsModule,
     MessageModule,

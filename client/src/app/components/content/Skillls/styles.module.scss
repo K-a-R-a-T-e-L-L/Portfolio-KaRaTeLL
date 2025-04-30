@@ -42,6 +42,7 @@
             row-gap: 8px;
             padding-top: 10px;
             position: relative;
+            color: aquamarine;
 
             @keyframes AnimationAppereanceSkill {
                 0% {
@@ -84,6 +85,16 @@
                     .edit_box__checkbox {
                         height: 60%;
                         aspect-ratio: 1/1;
+                        background-color: black;
+                        border: 1px solid aqua;
+                        border-radius: 2px;
+                    }
+
+                    .edit_box__checkbox_active{
+                        background-image: url(/images/checked.png);
+                        background-size: 80% 80%;
+                        background-repeat: no-repeat;
+                        background-position: center center;
                     }
 
                     .edit_box__delete {
@@ -112,10 +123,11 @@
                         display: grid;
                         place-items: center;
                         padding: 0;
-                        font-size: 9px;
+                        font-size: 0.8vw;
                         background-color: rgba(255, 0, 0, 0.2);
                         border-radius: 3px;
                         border: 1px solid red;
+                        color: white;
                     }
                 }
 
@@ -136,7 +148,9 @@
                     height: 100%;
                     background-color: transparent;
                     border: 0px;
-                    padding: 3%;
+                    padding-left: 10%;
+                    font-family: Piksieli Prst;
+                    font-size: 1.1vw;
                 }
 
                 .adding_skill__button {

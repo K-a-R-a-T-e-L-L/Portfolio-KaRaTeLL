@@ -166,7 +166,8 @@ const Skills = () => {
                                         {el.value}
                                         {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && (
                                             <div className={style.skill__edit_box}>
-                                                <input className={style.edit_box__checkbox} id={`checkbox-${i}`} checked={el.active} type="checkbox" data-interactive="true" onChange={() => handleAddingStack(i, el.id)} />
+                                                <input style={{display: 'none'}} type="checkbox" />
+                                                <div className={el.active ? `${style.edit_box__checkbox} ${style.edit_box__checkbox_active}` : `${style.edit_box__checkbox}`} onClick={() => handleAddingStack(i, el.id)} data-interactive="true"></div>
                                                 <button className={style.edit_box__delete} data-interactive="true" onClick={() => handleDeleteSkill(i, el.id)}></button>
                                             </div>
                                         )}
@@ -174,8 +175,8 @@ const Skills = () => {
                                 )
                             }) : (<p style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px' }}>Навыков не найдено!!!</p>)}
                             {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && (
-                                <div className={style.skills__adding_skill}>
-                                    <input className={style.adding_skill__input} id='new-skill' type="text" placeholder='skill' value={ValueSkill} onChange={(e) => handleValueSkill(e)} />
+                                <div className={style.skills__adding_skill} style={ArraySkills.length === 0 ? {marginTop: '30px'} : {}}>
+                                    <input className={style.adding_skill__input} id='new-skill' type="text" placeholder='Adding' value={ValueSkill} onChange={(e) => handleValueSkill(e)} />
                                     <button className={style.adding_skill__button} data-interactive="true" onClick={handleSaveSkill}></button>
                                 </div>
                             )}
@@ -184,7 +185,7 @@ const Skills = () => {
                     <div className={style.article__side_box}>
                         <h2 className={style.side_box__h2_two}>Основной стэк</h2>
                         <div className={style.side_box__skills}>
-                            {ArraySkills.length > 0 ? ArraySkills.map((el, i) =>
+                            {ArraySkills.find((el) => el.active === true) && ArraySkills.length > 0 ? ArraySkills.map((el, i) =>
                                 el.active && (
                                     <li key={i} className={style.skills__skill} style={{ "--random-color": getRandomRGBColor(), "--delay": `${i / 7}s` } as React.CSSProperties}>
                                         {el.value}

@@ -42,15 +42,16 @@
         .form__div_input {
             position: relative;
             width: 70%;
-            height: 40px;
+            height: 30px;
 
             .div_input__input {
+                font-size: 12px;
                 width: 100%;
                 height: 100%;
                 padding-left: 20px;
                 border-radius: 5px 5px 0 0;
                 background-color: black;
-                color: rgb(232, 255, 187);
+                color: aqua;
                 border: none;
                 border-bottom: 1px solid rgba(128, 128, 128, 0.505);
                 outline: none;
@@ -66,15 +67,16 @@
 
         .form__button {
             width: 40%;
-            height: 30px;
-            background-color: rgb(0, 19, 19);
-            color: rgba(255, 255, 255, 0.572);
+            height: 40px;
+            background-color: rgb(0, 14, 14);
+            color: aquamarine;
             font-size: 10px;
-            border: 1px solid rgb(0, 32, 33);
+            border: 1px solid rgb(0, 83, 86);
             border-radius: 3px;
             font-weight: bold;
             cursor: pointer;
             animation: Appereance 1s ease;
+            margin-top: 10px;
 
             &:hover {
                 color: white;
@@ -164,5 +166,11 @@
             color: white;
             cursor: pointer;
         }
+    }
+}
+
+@media (width < 800px) {
+    .div_secret_form__form {
+        height: 400px !important;
     }
 }

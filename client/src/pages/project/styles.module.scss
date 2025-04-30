@@ -10,6 +10,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.415);
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 255, 0.529);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: black;
+        border-radius: 6px;
+    }
 
     @keyframes AppereanceButtonBack {
         0% {
@@ -42,6 +62,9 @@
                 font-family: 'Capture Smallz';
                 margin: 0;
                 color: rgba(var(--color), 0.7);
+                word-wrap: break-word;
+                overflow: hidden;
+                text-align: center;
             }
 
             .side_div__description {
@@ -50,6 +73,7 @@
                 font-style: italic;
                 word-break: break-all;
                 color: rgba(var(--color), 0.6);
+                text-align: left;
             }
 
             .side_div__link {
@@ -60,6 +84,11 @@
                 font-family: 'Papyrus';
                 font-weight: 900;
                 text-decoration: underline;
+                display: -webkit-box;
+                line-clamp: 2;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
 
                 &:hover {
                     color: rgb(var(--color));
@@ -76,17 +105,22 @@
                 justify-content: center;
 
                 .stack_el {
-                    width: 60px;
-                    height: 60px;
+                    min-width: 60px;
+                    min-height: 60px;
                     background-color: rgba(var(--color), 0.1);
                     border: 1px solid rgb(var(--color));
                     color: rgb(var(--color));
-                    display: grid;
-                    place-items: center;
                     border-radius: 5px;
                     font-family: 'Piksieli Prst';
                     font-size: 10px;
                     letter-spacing: 1px;
+                    overflow: hidden;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    word-wrap: break-word;
+                    word-break: break-all;
+                    padding: 5px;
                 }
             }
         }
@@ -97,9 +131,9 @@
         aspect-ratio: 1/1;
         background-color: rgba(255, 0, 0, 0.226);
         border-radius: 15%;
-        position: absolute;
-        left: 5%;
-        bottom: 5%;
+        position: fixed;
+        left: 1%;
+        bottom: 1%;
         background-image: url(/images/delete.png);
         background-repeat: no-repeat;
         background-position: center center;
@@ -180,8 +214,8 @@
         }
 
         .stack_el {
-            width: 45px !important;
-            height: 45px !important;
+            min-width: 45px !important;
+            min-height: 45px !important;
             font-size: 8px !important;
         }
     }
