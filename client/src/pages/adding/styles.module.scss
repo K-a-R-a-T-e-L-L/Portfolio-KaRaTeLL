@@ -7,6 +7,24 @@
     display: grid;
     place-items: center;
     position: relative;
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.415);
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 255, 0.529);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: black;
+        border-radius: 6px;
+    }
 
     .strong {
         color: rgb(255, 47, 0);
@@ -513,6 +531,8 @@
 @media (width < 1100px) {
     .adding_projects__content {
         flex-direction: column-reverse !important;
+        row-gap: 20px !important;
+        padding-top: 30px;
 
         .content__project_edit_form {
             grid-template-columns: 100% !important;

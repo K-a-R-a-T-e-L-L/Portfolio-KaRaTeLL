@@ -72,7 +72,7 @@ const Skills = () => {
     };
 
     const handleSaveSkill = useCallback(() => {
-        if (ValueSkill !== '') {
+        if (ValueSkill !== '' && ValueSkill.length > 0) {
             axios.post(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/addingSkill`, { value: ValueSkill, active: false }, {
                 headers: {
                     Authorization: `Bearer ${Token}`

@@ -221,15 +221,15 @@ const AddingProjects = ({ token }: { token: string }) => {
             return;
         } else { setWarnInputs((prevState => { return { ...prevState, link: '' } })); };
 
-        if (ValuesInputs.description === '' || ValuesInputs.description.length < 50 || ValuesInputs.description.length > 1000) {
-            setWarnInputs((prevState => { return { ...prevState, description: 'Введите от 50 до 1000 символов !!!' } }));
-            return;
-        } else { setWarnInputs((prevState => { return { ...prevState, description: '' } })); };
-
         if (!ValuesInputs.images?.img.length || ValuesInputs.images?.img.length < 1 || ValuesInputs.images?.img.length > 10) {
             setWarnInputs((prevState => { return { ...prevState, images: 'Добавьте от 1 до 10 изображений !!!' } }));
             return;
         } else { setWarnInputs((prevState => { return { ...prevState, images: '' } })); };
+
+        if (ValuesInputs.description === '' || ValuesInputs.description.length < 50 || ValuesInputs.description.length > 1000) {
+            setWarnInputs((prevState => { return { ...prevState, description: 'Введите от 50 до 1000 символов !!!' } }));
+            return;
+        } else { setWarnInputs((prevState => { return { ...prevState, description: '' } })); };
 
         if (!ValuesInputs.images?.icon.length || ValuesInputs.images?.icon.length < 1 || ValuesInputs.images?.icon.length > 10) {
             setWarnInputs((prevState => { return { ...prevState, icons: 'Добавьте от 1 до 3 иконок !!!' } }));

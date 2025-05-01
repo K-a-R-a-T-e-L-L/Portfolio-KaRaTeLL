@@ -90,7 +90,7 @@
                         border-radius: 2px;
                     }
 
-                    .edit_box__checkbox_active{
+                    .edit_box__checkbox_active {
                         background-image: url(/images/checked.png);
                         background-size: 80% 80%;
                         background-repeat: no-repeat;
@@ -105,7 +105,7 @@
                         border: 1px solid red;
                         background-image: url(/images/delete.png);
                         background-position: center center;
-                        background-size: 100% 100%;
+                        background-size: 80% 80%;
                         background-repeat: no-repeat;
 
                         &:hover {
@@ -188,8 +188,31 @@
     }
 }
 
+@media (width < 650px) {
+    .skills__skill {
+        aspect-ratio: 10/1.5 !important;
+
+        .skill__edit_box {
+            column-gap: 5px;
+
+            .edit_box__delete_two {
+                font-size: 1.5vw !important;
+                border: 0.01vw solid red !important;
+            }
+        }
+    }
+}
+
 @media (width < 600px) {
     .article {
         margin-top: 20px;
+    }
+}
+
+@media (width < 400px) {
+    .edit_box__delete {
+        border: 0.01vw solid red !important;
+        background-size: 60% 60% !important;
+        border-radius: 2px !important;
     }
 }
