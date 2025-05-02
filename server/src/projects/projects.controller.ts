@@ -16,7 +16,7 @@ export class ProjectsController {
   @Roles(process.env.ADMIN_ROLE as string)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @UseInterceptors(FileFieldsInterceptor([
-    { name: 'img', maxCount: 10 },
+    { name: 'img', maxCount: 20 },
     { name: 'icon', maxCount: 3 }
   ], multerConfig))
 

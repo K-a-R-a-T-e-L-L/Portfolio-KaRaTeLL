@@ -19,6 +19,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel }) => {
     const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/uploads/`;
     const [WidthWindow] = useGetSizingWindow();
     const [WidthImgView, setWidthImgView] = useState(WidthWindow >= 1200 ? 400 : (WidthWindow <= 650 ? 240 : 320));
+    const [ImgStateView, setImgStateView] = useState<boolean>(false);
 
     const handleBlockShift = (index: number) => {
         setArrayImages((prevState) => {
@@ -80,14 +81,15 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel }) => {
                     {ArrayImages.map((el, i) => {
                         return (
                             <div
-                                className={style.window__img}
+                                className={ImgStateView && el.view ? `${style.window__img} ${style.window__img_full}` : `${style.window__img}`}
                                 onClick={() => handleBlockShift(i)}
                                 key={i}
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
                                 style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}` }}
                             >
                                 <Image className={style.img__image} src={`${ServerURL}${el.path}`} alt='Image' fill priority sizes='100%' />
-                                {el.view && (
+                                {el.view && (<button data-interactive="true" className={ImgStateView ? style.image__button_close : style.image__button_open} onClick={() => setImgStateView(!ImgStateView)}></button>)}
+                                {el.view && !ImgStateView && (
                                     <>
                                         {i === 0 ? null : (
                                             <button className={style.img__button_left} onClick={() => handleBlockShift(i--)} data-interactive="true">⟨</button>

@@ -117,6 +117,16 @@ const ProjectPage = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const nextElement = document.getElementById('__next');
+        if (nextElement) {
+            nextElement.style.width = '100vw';
+            nextElement.style.height = '100vh';
+            nextElement.style.maxWidth = '1488px';
+            nextElement.style.maxHeight = '740px';
+        }
+    }, []);
+
     if (!id) {
         return <div>Project not found</div>;
     };

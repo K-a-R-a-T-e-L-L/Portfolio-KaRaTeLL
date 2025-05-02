@@ -13,8 +13,8 @@ export class ProjectsService {
         if (!images.icon || images.icon.length < 1 || images.icon.length > 3) {
             throw new ConflictException('Add from 1 to 3 icons!!!');
         }
-        else if (!images.img || images.img.length < 1 || images.img.length > 10) {
-            throw new ConflictException('Add from 1 to 10 images!!!');
+        else if (!images.img || images.img.length < 1 || images.img.length > 20) {
+            throw new ConflictException('Add from 1 to 20 images!!!');
         }
         else if (skills.length < 3 || skills.length > 20) {
             throw new BadRequestException('Add from 3 to 20 skills!!!');

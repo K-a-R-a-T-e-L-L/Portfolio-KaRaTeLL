@@ -19,6 +19,17 @@
         flex-direction: row;
         justify-content: start;
 
+        .window__img_full{
+            position: fixed !important;
+            min-width: 100vw !important;
+            min-height: 100vh !important;
+            background-color: black;
+            z-index: 1;
+            transform: translateX(0) !important;
+            top: 0;
+            left: 0;
+        }
+
         .window__img {
             min-width: 100%;
             min-height: 100%;
@@ -30,7 +41,7 @@
 
             .img__image {
                 border-radius: 5px;
-                object-fit: cover;
+                object-fit: contain;
             }
 
             @mixin ButtonSwipe ($left, $right) {
@@ -47,6 +58,7 @@
                 border: none;
                 cursor: pointer;
                 opacity: 0.7;
+                z-index: 2;
 
                 &:hover {
                     color: aqua;
@@ -67,6 +79,44 @@
 
             .img__button_right {
                 @include ButtonSwipe(none, -10%);
+            }
+
+            @mixin ButtonViewImg ($img, $bottom, $right, $size) {
+                width: $size;
+                height: $size;
+                position: absolute;
+                bottom: $bottom;
+                right: $right;
+                z-index: 1;
+                background-image: url("/images/#{$img}.png");
+                background-size: 100% 100%;
+                background-color: black;
+                border-radius: 10%;
+                border: 1px solid white;
+                opacity: 0.7;
+                transition: scale 0.3s ease;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &:focus-visible {
+                    opacity: 1;
+                    outline: 2px solid black;
+                }
+
+                &:active {
+                    scale: 0.9;
+                }
+            }
+
+            .image__button_open {
+                @include ButtonViewImg(fullScreen, 5px, 5px, 30px);
+            }
+
+            .image__button_close {
+                @include ButtonViewImg(screen, auto, 2%, 60px);
             }
         }
     }

@@ -11,7 +11,7 @@ export class AuthService {
     async register(email: string, number: string, password: string) {
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const role = email === process.env.ADMIN_EMAIL as string || number === process.env.ADMIN_TELEPHONE as string ? process.env.ADMIN_ROLE as string : 'User';
+        const role = email === process.env.ADMIN_EMAIL as string && number === process.env.ADMIN_TELEPHONE as string ? process.env.ADMIN_ROLE as string : 'User';
 
         try {
             await this.prisma.users.create({

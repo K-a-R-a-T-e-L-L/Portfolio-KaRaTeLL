@@ -78,7 +78,7 @@ const AddingProjects = ({ token }: { token: string }) => {
         const value: File[] = [];
 
         if (e.target.files && e.target.files?.length > 0) {
-            for (let i = 0; i < Math.min(type === 'img' ? 10 : 3, e.target.files.length); i++) {
+            for (let i = 0; i < Math.min(type === 'img' ? 20 : 3, e.target.files.length); i++) {
                 value.push(e.target.files[i])
             };
         };
@@ -221,8 +221,8 @@ const AddingProjects = ({ token }: { token: string }) => {
             return;
         } else { setWarnInputs((prevState => { return { ...prevState, link: '' } })); };
 
-        if (!ValuesInputs.images?.img.length || ValuesInputs.images?.img.length < 1 || ValuesInputs.images?.img.length > 10) {
-            setWarnInputs((prevState => { return { ...prevState, images: 'Добавьте от 1 до 10 изображений !!!' } }));
+        if (!ValuesInputs.images?.img.length || ValuesInputs.images?.img.length < 1 || ValuesInputs.images?.img.length > 20) {
+            setWarnInputs((prevState => { return { ...prevState, images: 'Добавьте от 1 до 20 изображений !!!' } }));
             return;
         } else { setWarnInputs((prevState => { return { ...prevState, images: '' } })); };
 
