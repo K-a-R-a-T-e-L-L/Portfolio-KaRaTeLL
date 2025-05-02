@@ -22,6 +22,7 @@ const ProjectPage = () => {
     const [Project, setProject] = useState<ProjectType | null>(null);
     const [ArrayImages, setArrayImages] = useState<ArrayImagesType[] | null>(null);
     const [SuccessfullyDelete, setSuccessfullyDelete] = useState<string | null>(null);
+    const [ColorHSL, setColorHSL] = useState<number[]>([]);
 
     const handleGettingProject = useCallback(() => {
         setLoading(true);
@@ -90,6 +91,36 @@ const ProjectPage = () => {
     }, [id, handleGettingProject]);
 
     useEffect(() => {
+        if (!Project?.color) return;
+        const r = Number(Project?.color.split(',')[0]) / 255;
+        const g = Number(Project?.color.split(',')[1]) / 255;
+        const b = Number(Project?.color.split(',')[2]) / 255;
+        const min = Math.min(r, g, b);
+        const max = Math.max(r, g, b);
+        const delta = max - min;
+        let h: number = 0;
+        let s: number = 0;
+        let l: number = (max + min) / 2;
+
+        if (delta !== 0) {
+            s = delta / (1 - Math.abs(2 * l - 1));
+            if (max === r) {
+                h = ((g - b) / delta) % 6;
+            }
+            else if (max == g) {
+                h = (b - r) / delta + 2;
+            }
+            else {
+                h = (r - g) / delta + 4;
+            };
+            h *= 60;
+            if (h < 0) h += 360;
+        };
+
+        setColorHSL([h, s * 100, l * 100]);
+    }, [Project?.color]);
+
+    useEffect(() => {
         if (TokenCookie) {
             setToken(TokenCookie);
         }
@@ -146,14 +177,17 @@ const ProjectPage = () => {
                                 <MessageSuccessfullyBlock successfullyMessage={SuccessfullyDelete} buttonText={'Назад'} func={handleBack} />
                             ) : (
                                 <>
-                                    {ArrayImages && (<SliderCarousel imagesCarousel={ArrayImages} />)}
-                                    <section className={style.project_div__info} style={{ "--color": Project.color } as React.CSSProperties}>
+                                    {ArrayImages && (<SliderCarousel imagesCarousel={ArrayImages} color={Project.color} />)}
+                                    <section
+                                        className={style.project_div__info}
+                                        style={ColorHSL.length ? { "--color-h": ColorHSL[0], "--color-s": ColorHSL[1].toString() + '%', "--color-l": ColorHSL[2].toString() + '%', '--color-rgb': Project.color } as React.CSSProperties : { color: 'white' }}
+                                    >
                                         <div className={style.info__side_div}>
                                             <h3 className={style.side_div__name}>{Project.name}</h3>
-                                            <p className={style.side_div__description}>{Project.description}</p>
+                                            <pre className={style.side_div__description}>{Project.description}</pre>
                                         </div>
                                         <div className={style.info__side_div}>
-                                            <a className={style.side_div__link} href={Project.link} data-interactive="true">{Project.link}</a>
+                                            <a className={style.side_div__link} href={Project.link} target='_blank' data-interactive="true">{Project.link}</a>
                                             <div className={style.side_div__stack}>
                                                 {Project.skills.map((el, i) => {
                                                     return (

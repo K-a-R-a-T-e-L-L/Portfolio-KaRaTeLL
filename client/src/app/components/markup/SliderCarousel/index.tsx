@@ -11,14 +11,15 @@ type ArrayImagesType = {
 
 interface SliderCarouselProps {
     imagesCarousel: ArrayImagesType[];
+    color: string;
 };
 
-const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel }) => {
+const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }) => {
 
     const [ArrayImages, setArrayImages] = useState<ArrayImagesType[]>(imagesCarousel);
     const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/uploads/`;
     const [WidthWindow] = useGetSizingWindow();
-    const [WidthImgView, setWidthImgView] = useState(WidthWindow >= 1200 ? 400 : (WidthWindow <= 650 ? 240 : 320));
+    const [WidthImgView, setWidthImgView] = useState(WidthWindow >= 1200 ? 400 : (WidthWindow > 650 ? 320 : (WidthWindow < 450 ? 190 : 240)));
     const [ImgStateView, setImgStateView] = useState<boolean>(false);
 
     const handleBlockShift = (index: number) => {
@@ -71,7 +72,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel }) => {
     }, [WidthImgView, ArrayImages?.length]);
 
     useEffect(() => {
-        setWidthImgView(WidthWindow >= 1200 ? 400 : (WidthWindow <= 650 ? 240 : 320));
+        setWidthImgView(WidthWindow >= 1200 ? 400 : (WidthWindow > 650 ? 320 : (WidthWindow < 450 ? 190 : 240)));
     }, [WidthWindow]);
 
     return (
@@ -85,7 +86,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel }) => {
                                 onClick={() => handleBlockShift(i)}
                                 key={i}
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
-                                style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}` }}
+                                style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}`, border: `1px solid ${`rgba(${color}, 0.4)`}` }}
                             >
                                 <Image className={style.img__image} src={`${ServerURL}${el.path}`} alt='Image' fill priority sizes='100%' />
                                 {el.view && (<button data-interactive="true" className={ImgStateView ? style.image__button_close : style.image__button_open} onClick={() => setImgStateView(!ImgStateView)}></button>)}

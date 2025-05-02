@@ -58,25 +58,23 @@
             }
 
             .side_div__name {
-                font-family: 'Capture Smallz';
                 margin: 0;
-                color: rgba(var(--color), 0.7);
+                color: hsl(var(--color-h), var(--color-s), 90%);
                 word-wrap: break-word;
                 overflow: hidden;
                 text-align: center;
             }
 
             .side_div__description {
-                font-family: 'EasyFontSteel';
                 font-size: 16px;
-                font-style: italic;
-                word-break: break-all;
-                color: rgba(var(--color), 0.6);
+                word-wrap: break-word;
+                color: hsl(var(--color-h), var(--color-s), 95%);
                 text-align: left;
+                overflow: hidden;   
             }
 
             .side_div__link {
-                color: rgba(var(--color), 0.5);
+                color: hsl(var(--color-h), var(--color-s), 70%);
                 text-decoration: none;
                 margin-bottom: 15px;
                 word-break: break-all;
@@ -90,7 +88,7 @@
                 overflow: hidden;
 
                 &:hover {
-                    color: rgb(var(--color));
+                    color: hsl(var(--color-h), var(--color-s), 60%);
                 }
             }
 
@@ -106,9 +104,9 @@
                 .stack_el {
                     min-width: 60px;
                     min-height: 60px;
-                    background-color: rgba(var(--color), 0.1);
-                    border: 1px solid rgb(var(--color));
-                    color: rgb(var(--color));
+                    background-color: rgba(var(--color-rgb), 0.1);
+                    border: 1px solid rgba(var(--color-rgb), 0.4);
+                    color: rgba(var(--color-rgb), 0.8);
                     border-radius: 5px;
                     font-family: 'Piksieli Prst';
                     font-size: 10px;
