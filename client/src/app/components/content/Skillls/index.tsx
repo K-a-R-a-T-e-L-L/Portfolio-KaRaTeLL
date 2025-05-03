@@ -109,6 +109,9 @@ const Skills = () => {
     };
 
     useEffect(() => {
+        if (MessageError === '' && Loading) {
+            setTimeout(() => { setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!'); }, 1000)
+        }
         setLoading(true);
         axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/getSkills`)
             .then((res) => {
@@ -125,7 +128,7 @@ const Skills = () => {
                 }
             })
             .finally(() => setLoading(false));
-            // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -133,6 +136,13 @@ const Skills = () => {
             setToken(TokenCookie);
         };
     }, [TokenCookie, setToken]);
+
+    useEffect(() => {
+        if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
+            const timeout = setTimeout(() => { setMessageError('') }, 4000);
+            return () => clearTimeout(timeout);
+        };
+    }, [MessageError]);
 
     useEffect(() => {
         const inputSkills = document.getElementById('new-skill');
@@ -166,7 +176,7 @@ const Skills = () => {
                                         {el.value}
                                         {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && (
                                             <div className={style.skill__edit_box}>
-                                                <input style={{display: 'none'}} type="checkbox" />
+                                                <input style={{ display: 'none' }} type="checkbox" />
                                                 <div className={el.active ? `${style.edit_box__checkbox} ${style.edit_box__checkbox_active}` : `${style.edit_box__checkbox}`} onClick={() => handleAddingStack(i, el.id)} data-interactive="true"></div>
                                                 <button className={style.edit_box__delete} data-interactive="true" onClick={() => handleDeleteSkill(i, el.id)}></button>
                                             </div>
@@ -175,7 +185,7 @@ const Skills = () => {
                                 )
                             }) : (<p style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', fontSize: '10px' }}>Навыков не найдено!!!</p>)}
                             {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && (
-                                <div className={style.skills__adding_skill} style={ArraySkills.length === 0 ? {marginTop: '30px'} : {}}>
+                                <div className={style.skills__adding_skill} style={ArraySkills.length === 0 ? { marginTop: '30px' } : {}}>
                                     <input className={style.adding_skill__input} id='new-skill' type="text" placeholder='Adding' value={ValueSkill} onChange={(e) => handleValueSkill(e)} />
                                     <button className={style.adding_skill__button} data-interactive="true" onClick={handleSaveSkill}></button>
                                 </div>
@@ -201,7 +211,7 @@ const Skills = () => {
                     </div>
                 </article>
             )}
-            {MessageError !== '' && (<MessageErrorBlock MessageError={MessageError} setMessageError={setMessageError} />)}
+            {MessageError && (<MessageErrorBlock MessageError={MessageError} setMessageError={setMessageError} />)}
         </>
     );
 };

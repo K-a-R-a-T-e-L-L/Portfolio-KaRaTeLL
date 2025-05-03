@@ -11,8 +11,8 @@ import { BotModule } from './bot/bot.module';
     AuthModule,
     ProjectsModule,
     SkillsModule,
-    MessageModule,
-    BotModule,
+    // MessageModule,
+    // BotModule,
   ],
   providers: [PrismaService],
 })

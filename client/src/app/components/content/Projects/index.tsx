@@ -29,33 +29,43 @@ type ProjectType = {
 type ArrayProjectsType = ProjectType[];
 
 const Projects = () => {
-    const {TokenCookie, deleteTokenCookie} = useCookie('token', '', '/', 600);
+    const { TokenCookie, deleteTokenCookie } = useCookie('token', '', '/', 600);
     const { setToken, TokenDecode, setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [ArrayProjects, setArrayProjects] = useState<ArrayProjectsType>([]);
 
     const handleGettingProjects = () => {
-            setLoading(true);
-            axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/projects/getProjects`)
-                .then((res) => {
-                    setArrayProjects(res.data);                    
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (axios.isAxiosError(error)) {
-                        switch (error.response?.status) {
-                            default:
-                                setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
-                                break;
-                        };
-                    }
-                })
-                .finally(() => { setLoading(false); });
+        if (MessageError === '' && Loading) {
+            setTimeout(() => { setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!'); }, 1000)
+        }
+        setLoading(true);
+        axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/projects/getProjects`)
+            .then((res) => {
+                setArrayProjects(res.data);
+            })
+            .catch((error) => {
+                console.error(error);
+                if (axios.isAxiosError(error)) {
+                    switch (error.response?.status) {
+                        default:
+                            setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
+                            break;
+                    };
+                }
+            })
+            .finally(() => { setLoading(false); });
     };
 
     useEffect(() => {
         handleGettingProjects();
-         // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
+            const timeout = setTimeout(() => { setMessageError('') }, 4000);
+            return () => clearTimeout(timeout);
+        };
+    }, [MessageError]);
 
     useEffect(() => {
         if (TokenCookie) {

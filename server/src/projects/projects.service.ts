@@ -1,6 +1,6 @@
 import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { unlinkSync } from 'fs';
+import { unlinkSync, promises as fs } from 'fs';
 import { join } from 'path';
 
 @Injectable()
@@ -86,40 +86,51 @@ export class ProjectsService {
     }
 
     async deleteProject(id: number) {
+        let project;
         try {
-            const project = await this.prisma.projects.findUnique({
-                where: { id: id }
+            project = await this.prisma.$transaction(async (tx) => {
+                const p = await tx.projects.findUnique({
+                    where: { id },
+                    select: { URLImages: true }
+                });
+                if (!p) throw new NotFoundException(`Project with ID ${id} not found!`);
+
+                await tx.projects.delete({ where: { id } });
+                return p;
             });
 
-            if (!project) throw new NotFoundException(`Project with ID ${id} not found!!!`);
-
-            const { URLImages } = project;
-            const Images = JSON.parse(URLImages as string);
-
-            if (Images.img) {
-                Images.img.forEach(fileName => {
-                    unlinkSync(join(process.cwd(), 'uploads', fileName));
-                })
-            };
-
-            if (Images.icon) {
-                Images.icon.forEach(fileName => {
-                    unlinkSync(join(process.cwd(), 'uploads', fileName));
-                })
-            };
-
-            await this.prisma.projects.delete({
-                where: { id: id }
-            });
+            if (project?.URLImages) {
+                const Images = JSON.parse(project.URLImages as string);
+                await this.deleteFilesSafely(Images);
+            }
 
             return { message: 'Project deleted successfully' };
-
         } catch (error) {
-            console.error(error);
-            if (error instanceof NotFoundException) {
-                throw error;
+            console.error('Delete project error:', error);
+            if (error instanceof NotFoundException) throw error;
+            throw new InternalServerErrorException('Error deleting project');
+        }
+    }
+
+    private async deleteFilesSafely(Images: { img?: string[]; icon?: string[] }) {
+        try {
+            const deletePromises: Promise<void>[] = [];
+            
+            if (Images.img?.length) {
+                deletePromises.push(...Images.img.map(fileName => 
+                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => {})
+                ));
             }
-            throw new InternalServerErrorException('Bad connection or server error when deleting a project!!!');
+            
+            if (Images.icon?.length) {
+                deletePromises.push(...Images.icon.map(fileName => 
+                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => {})
+                ));
+            }
+            
+            await Promise.all(deletePromises);
+        } catch (err) {
+            console.error('File deletion error:', err);
         }
     }
 }
