@@ -67,7 +67,7 @@
 
             .side_div__description {
                 font-size: 16px;
-                word-wrap: break-word;
+                white-space: pre-wrap;
                 color: hsl(var(--color-h), var(--color-s), 95%);
                 text-align: left;
                 overflow: hidden;   
@@ -104,9 +104,9 @@
                 .stack_el {
                     min-width: 60px;
                     min-height: 60px;
-                    background-color: rgba(var(--color-rgb), 0.1);
-                    border: 1px solid rgba(var(--color-rgb), 0.4);
-                    color: rgba(var(--color-rgb), 0.8);
+                    background-color: rgba(var(--color-rgb), 0.05);
+                    border: 1px solid hsl(var(--color-h), var(--color-s), 60%);;
+                    color: hsl(var(--color-h), var(--color-s), 60%);;
                     border-radius: 5px;
                     font-family: 'Piksieli Prst';
                     font-size: 10px;
