@@ -9,6 +9,7 @@ import Skeleton from "./components/markup/Skeleton";
 import { useSessionStorage } from "../hooks/useSessionStorage/useSessionStorage";
 import BackgroundMain from "./components/decorative/BackgroundMain";
 import ButtonExit from "./components/decorative/ButtonExit";
+import MessageErrorBlock from "./components/decorative/MessageErrorBlock";
 
 export default function Home() {
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [StateBurgerMenu, setStateBurgerMenu] = useState<boolean>(false);
   const [DisplayInsides, setDisplayInsides] = useState<boolean>(false);
   const [BackgroundUploaded, setBackgroundUploaded] = useState<HTMLCanvasElement | null>(null);
+  const [MessageError, setMessageError] = useState<string>('');
 
   useEffect(() => {
     if (StateBurgerMenu) {
@@ -28,8 +30,18 @@ export default function Home() {
 
   useEffect(() => {
     const canvas = document.getElementsByTagName('canvas')[0];
-    if (canvas) setBackgroundUploaded(canvas);
+    if (canvas) {
+      setBackgroundUploaded(canvas);
+      setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!');
+    }
   }, []);
+
+  useEffect(() => {
+    if (MessageError !== '') {
+      const timeout = setTimeout(() => { setMessageError('') }, 4000);
+      return () => clearTimeout(timeout);
+    };
+  }, [MessageError]);
 
   return (
     <>
@@ -44,6 +56,7 @@ export default function Home() {
               <main className="div__main">
                 <WelcomeForm />
                 <SectionContent currentComponent={CurrentComponent} />
+                {MessageError && (<MessageErrorBlock setMessageError={setMessageError} MessageError={MessageError} />)}
               </main>
             )}
           </>
