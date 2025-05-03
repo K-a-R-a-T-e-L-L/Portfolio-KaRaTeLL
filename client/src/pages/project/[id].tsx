@@ -100,7 +100,7 @@ const ProjectPage = () => {
         const delta = max - min;
         let h: number = 0;
         let s: number = 0;
-        let l: number = (max + min) / 2;
+        const l: number = (max + min) / 2;
 
         if (delta !== 0) {
             s = delta / (1 - Math.abs(2 * l - 1));
