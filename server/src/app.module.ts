@@ -12,7 +12,7 @@ import { BotModule } from './bot/bot.module';
     ProjectsModule,
     SkillsModule,
     MessageModule,
-    BotModule,
+    BotModule,    
   ],
   providers: [PrismaService],
 })
