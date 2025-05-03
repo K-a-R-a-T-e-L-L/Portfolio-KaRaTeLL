@@ -89,11 +89,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, edit }) => {
                                 <div className={style.description__background_image} key={i} style={{ left: `${data.positioningIcon[i].x}%`, bottom: `${data.positioningIcon[i].y}%` }}>
                                     {edit ? (
                                         ArrayIconBackground[i] !== '' && (
-                                            <Image src={ArrayIconBackground[i]} alt='Icon' sizes='100%' fill priority style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))` }} />
+                                            <Image src={ArrayIconBackground[i]} alt='Icon' sizes='100%' fill priority style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain'  }} />
                                         )
                                     ) : (
                                         el !== '' && (
-                                            <Image src={el} alt='Icon' sizes='100%' fill priority style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))` }} />
+                                            <Image src={el} alt='Icon' sizes='100%' fill priority style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain' }} />
                                         )
                                     )}
                                 </div>

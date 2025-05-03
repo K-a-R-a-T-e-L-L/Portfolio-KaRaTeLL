@@ -170,7 +170,6 @@
                     aspect-ratio: 1/1;
                     position: absolute;
                     opacity: 0.3;
-                    object-fit: contain;
 
                     &:first-of-type {
                         @include PositionBacgroundImage(30deg, none, -5%, 10%);
