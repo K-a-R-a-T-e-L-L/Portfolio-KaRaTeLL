@@ -23,19 +23,28 @@
    ```bash
    git clone https://github.com/K-a-R-a-T-e-L-L/Portfolio-KaRaTeLL
 
-2. Установка зависимостей:
+2. Переход в корневую папку:
+   ```bash
+   cd "Portfolio-KaRaTeLL"
+
+3. Установка зависимостей:
    ```bash
    cd client && npm install
    cd ../server && npm install
 
-3. Настройка env-переменных
+4. Настройка env-переменных
 
-4. Сборка и запуск клиента:
+5. Сборка и запуск клиента:
    ```bash
    cd ../client
    npm run build && npm run start
 
-5. Сборка и запуск сервера:
+6. Сборка и запуск сервера:
    ```bash
    cd ../server
    npx prisma migrate dev && npm run build && npm run start:prod
+
+## 📞 Контакты
+   ● **Телеграм** — [@K_a_R_a_T_e_L_L](https://t.me/K_a_R_a_T_e_L_L)
+   
+   ● **Email** — kirillcuhorukov6@gmail.com
