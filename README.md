@@ -45,6 +45,6 @@
    npx prisma migrate dev && npm run build && npm run start:prod
 
 ## 📞 Контакты
-   ● **Телеграм** — [@K_a_R_a_T_e_L_L](https://t.me/K_a_R_a_T_e_L_L "1")
+   ● **Телеграм** — [@K_a_R_a_T_e_L_L](https://t.me/K_a_R_a_T_e_L_L)
    
    ● **Email** — kirillcuhorukov6@gmail.com
