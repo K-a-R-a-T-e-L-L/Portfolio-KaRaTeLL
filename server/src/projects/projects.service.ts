@@ -2,6 +2,8 @@ import { BadRequestException, ConflictException, Injectable, InternalServerError
 import { PrismaService } from 'src/prisma/prisma.service';
 import { unlinkSync, promises as fs } from 'fs';
 import { join } from 'path';
+import { Response } from 'express';
+import sharp from 'sharp';
 
 @Injectable()
 export class ProjectsService {
@@ -51,6 +53,28 @@ export class ProjectsService {
         }
     };
 
+    async processImage(filename: string, width: number, quality: number, res: Response) {
+        const filePath = join(process.cwd(), 'uploads', filename);
+
+        try {
+            if (!width) {
+                return res.sendFile(filePath);
+            }
+
+            const transformer = sharp(filePath)
+                .resize({ width: Math.min(Number(width), 3840) })
+                .jpeg({ quality: quality ? Number(quality) : 75 });
+
+            res.set('Content-Type', 'image/jpeg');
+            return transformer.pipe(res);
+        } catch (e) {
+            try {
+                return res.sendFile(filePath);
+            } catch (err) {
+                throw new NotFoundException('Image not found');
+            }
+        }
+    }
 
     async getProjects() {
         try {
@@ -115,19 +139,19 @@ export class ProjectsService {
     private async deleteFilesSafely(Images: { img?: string[]; icon?: string[] }) {
         try {
             const deletePromises: Promise<void>[] = [];
-            
+
             if (Images.img?.length) {
-                deletePromises.push(...Images.img.map(fileName => 
-                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => {})
+                deletePromises.push(...Images.img.map(fileName =>
+                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => { })
                 ));
             }
-            
+
             if (Images.icon?.length) {
-                deletePromises.push(...Images.icon.map(fileName => 
-                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => {})
+                deletePromises.push(...Images.icon.map(fileName =>
+                    fs.unlink(join(process.cwd(), 'uploads', fileName)).catch(() => { })
                 ));
             }
-            
+
             await Promise.all(deletePromises);
         } catch (err) {
             console.error('File deletion error:', err);

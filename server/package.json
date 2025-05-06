@@ -31,6 +31,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node-telegram-bot-api": "^0.64.8",
     "@types/passport-jwt": "^4.0.1",
+    "@types/sharp": "^0.31.1",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
@@ -42,7 +43,8 @@
     "passport-jwt": "^4.0.1",
     "prisma": "^6.4.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sharp": "^0.34.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

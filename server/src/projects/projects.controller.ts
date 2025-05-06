@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req, Res, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateProjectsDto } from './create-projects.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'multer.config';
@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { ProjectsService } from './projects.service';
+import { Response } from 'express';
 
 @Controller('projects')
 export class ProjectsController {
@@ -30,6 +31,16 @@ export class ProjectsController {
       images: files
     });
   };
+
+  @Get('uploads/:filename')
+  async getImage(
+    @Param('filename') filename: string,
+    @Query('w') width: number,
+    @Query('q') quality: number,
+    @Res() res: Response
+  ) {
+    return this.projectsService.processImage(filename, width, quality, res);
+  }
 
   @Get('getProjects')
   async getProjects() {
