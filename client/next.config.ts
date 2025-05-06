@@ -6,10 +6,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_HOSTNAME_SERVER as string,
-        pathname: '/projects/uploads/**'
+        pathname: '/uploads/**'
       }
     ],
-    unoptimized: true
+    deviceSizes: [320, 640, 828, 1080, 1200], 
+    imageSizes: [16, 32, 48, 64],
   },
 };
 

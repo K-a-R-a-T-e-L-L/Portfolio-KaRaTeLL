@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from './styles.module.scss';
+import Image from 'next/image';
 import { useGetSizingWindow } from '@/hooks/useGetSizingWindow/useGetSizingWindow';
 
 type ArrayImagesType = {
@@ -16,7 +17,7 @@ interface SliderCarouselProps {
 const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }) => {
 
     const [ArrayImages, setArrayImages] = useState<ArrayImagesType[]>(imagesCarousel);
-    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/projects/uploads/`;
+    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/uploads/`;
     const [WidthWindow] = useGetSizingWindow();
     const [WidthImgView, setWidthImgView] = useState(WidthWindow >= 1200 ? 400 : (WidthWindow > 650 ? 320 : (WidthWindow < 450 ? 190 : 240)));
     const [ImgStateView, setImgStateView] = useState<boolean>(false);
@@ -87,13 +88,14 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
                                 style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}`, border: `1px solid ${`rgba(${color}, 0.4)`}` }}
                             >
-                                <img
-                                    src={`${ServerURL}${el.path}`}
-                                    alt="Image"
+                                <Image
                                     className={style.img__image}
+                                    src={`${ServerURL}${el.path}`}
+                                    alt='Image'
+                                    fill
+                                    priority
+                                    sizes="100%"
                                     style={{
-                                        width: '100%',
-                                        height: '100%',
                                         objectFit: 'contain',
                                     }}
                                 />
