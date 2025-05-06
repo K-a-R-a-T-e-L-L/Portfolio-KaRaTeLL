@@ -96,8 +96,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                     height={800}
                                     priority={true}
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    loader={({ src, width }) => `${src}?w=${width}&v=1.0`}
-                                    quality={85}
+                                    // loader={({ src, width }) => `${src}?w=${width}&v=1.0`}
                                     style={{
                                         objectFit: 'contain',
                                     }}
