@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from './styles.module.scss';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { useGetSizingWindow } from '@/hooks/useGetSizingWindow/useGetSizingWindow';
 
 type ArrayImagesType = {
@@ -88,7 +88,16 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
                                 style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}`, border: `1px solid ${`rgba(${color}, 0.4)`}` }}
                             >
-                                <img src={`${ServerURL}${el.path}`} alt='Image'  className={style.img__image}/>
+                                <Image
+                                    className={style.img__image}
+                                    src={`${ServerURL}${el.path}?v=${Date.now()}`}
+                                    alt='Image'
+                                    fill
+                                    sizes="100%"
+                                    style={{
+                                        objectFit: 'contain',
+                                    }}
+                                />
                                 {el.view && (<button data-interactive="true" className={ImgStateView ? style.image__button_close : style.image__button_open} onClick={() => setImgStateView(!ImgStateView)}></button>)}
                                 {el.view && !ImgStateView && (
                                     <>

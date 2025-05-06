@@ -72,14 +72,14 @@ const Projects = () => {
         if (MessageError === '' && LoadingTime === 4) {
             setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!');
         };
-    }, [LoadingTime]);
+    }, [LoadingTime, MessageError, setMessageError]);
 
     useEffect(() => {
         if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
             const timeout = setTimeout(() => { setMessageError('') }, 5000);
             return () => clearTimeout(timeout);
         };
-    }, [MessageError]);
+    }, [MessageError, setMessageError]);
 
     useEffect(() => {
         if (TokenCookie) {
