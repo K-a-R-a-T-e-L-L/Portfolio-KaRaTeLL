@@ -52,8 +52,12 @@
             position: relative;
 
             .img__image {
-                border-radius: 5px;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%;
                 object-fit: contain;
+                border-radius: 5px;
             }
 
             @mixin ButtonSwipe ($left, $right) {

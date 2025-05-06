@@ -71,12 +71,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, edit }) => {
                 <div className={style.project_card__project} style={{ borderColor: `rgba(${data.color}, 0.3)` }} data-interactive="true">
                     <div className={style.project__preview}>
                         {TimeoutAppereance && (
-                            <Image
+                            // <Image
+                            //     src={edit ? (data?.URLImages?.img?.length > 0 && PreviewImg ? PreviewImg : '/images/two.png') : (data?.URLImages?.img?.length > 0 ? `${ServerURL}${PreviewImg}?v=${Date.now()}` : '/images/two.png')}
+                            //     alt='Image preview'
+                            //     className={style.preview__image}
+                            //     sizes='100%'
+                            //     fill
+                            // />
+                            <img
                                 src={edit ? (data?.URLImages?.img?.length > 0 && PreviewImg ? PreviewImg : '/images/two.png') : (data?.URLImages?.img?.length > 0 ? `${ServerURL}${PreviewImg}?v=${Date.now()}` : '/images/two.png')}
-                                alt='Image preview'
+                                alt='Image'
                                 className={style.preview__image}
-                                sizes='100%'
-                                fill
                             />
                         )}
                     </div>
@@ -88,11 +93,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, edit }) => {
                                 <div className={style.description__background_image} key={i} style={{ left: `${data.positioningIcon[i].x}%`, bottom: `${data.positioningIcon[i].y}%` }}>
                                     {edit ? (
                                         ArrayIconBackground[i] !== '' && (
-                                            <Image src={`${ArrayIconBackground[i]}?v=${Date.now()}`} alt='Icon' sizes='100%' fill style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain'  }} />
+                                            // <Image src={`${ArrayIconBackground[i]}?v=${Date.now()}`} alt='Icon' sizes='100%' fill style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain' }} />
+                                            <img
+                                                src={`${ArrayIconBackground[i]}?v=${Date.now()}`}
+                                                alt='Icon'
+                                                style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))` }}
+                                            />
                                         )
                                     ) : (
                                         el !== '' && (
-                                            <Image src={el} alt='Icon' sizes='100%' fill style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain' }} />
+                                            // <Image src={el} alt='Icon' sizes='100%' fill style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))`, objectFit: 'contain' }} />
+                                            <img
+                                                src={el}
+                                                alt='Icon'
+                                                style={{ filter: `drop-shadow(0 0 15px rgb(${data.color}))` }}
+                                            />
                                         )
                                     )}
                                 </div>

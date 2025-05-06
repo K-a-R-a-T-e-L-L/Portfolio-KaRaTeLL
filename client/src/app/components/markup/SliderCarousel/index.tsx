@@ -88,16 +88,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
                                 style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}`, border: `1px solid ${`rgba(${color}, 0.4)`}` }}
                             >
-                                <Image
-                                    className={style.img__image}
-                                    src={`${ServerURL}${el.path}?v=${Date.now()}`}
-                                    alt='Image'
-                                    fill
-                                    sizes="100%"
-                                    style={{
-                                        objectFit: 'contain',
-                                    }}
-                                />
+                                <img src={`${ServerURL}${el.path}`} alt='Image'  className={style.img__image}/>
                                 {el.view && (<button data-interactive="true" className={ImgStateView ? style.image__button_close : style.image__button_open} onClick={() => setImgStateView(!ImgStateView)}></button>)}
                                 {el.view && !ImgStateView && (
                                     <>
