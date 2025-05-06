@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from './styles.module.scss';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useGetSizingWindow } from '@/hooks/useGetSizingWindow/useGetSizingWindow';
 
 type ArrayImagesType = {
