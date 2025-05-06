@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         pathname: '/uploads/**'
       }
     ],
-    deviceSizes: [320, 640, 828, 1080, 1200, 1920], 
+    deviceSizes: [320, 640, 828, 1080, 1200], 
     imageSizes: [16, 32, 48, 64],
   },
 };
