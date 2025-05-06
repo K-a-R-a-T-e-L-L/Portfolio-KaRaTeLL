@@ -16,7 +16,7 @@ interface SliderCarouselProps {
 const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }) => {
 
     const [ArrayImages, setArrayImages] = useState<ArrayImagesType[]>(imagesCarousel);
-    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/uploads/`;
+    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/projects/uploads/`;
     const [WidthWindow] = useGetSizingWindow();
     const [WidthImgView, setWidthImgView] = useState(WidthWindow >= 1200 ? 400 : (WidthWindow > 650 ? 320 : (WidthWindow < 450 ? 190 : 240)));
     const [ImgStateView, setImgStateView] = useState<boolean>(false);

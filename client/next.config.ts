@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_HOSTNAME_SERVER as string,
-        pathname: '/uploads/**'
+        pathname: '/projects/uploads/**'
       }
     ],
     unoptimized: true

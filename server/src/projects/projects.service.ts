@@ -53,20 +53,6 @@ export class ProjectsService {
         }
     };
 
-    private getMimeType(filename: string): string {
-        const extension = filename.split('.').pop()?.toLowerCase();
-        switch (extension) {
-            case 'png':
-                return 'image/png';
-            case 'webp':
-                return 'image/webp';
-            case 'gif':
-                return 'image/gif';
-            default:
-                return 'image/jpeg';
-        }
-    }
-
     async getProjects() {
         try {
             const projects = await this.prisma.projects.findMany();

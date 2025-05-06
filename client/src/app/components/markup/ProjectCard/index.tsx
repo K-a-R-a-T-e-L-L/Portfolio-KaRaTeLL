@@ -28,7 +28,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, edit }) => {
     const [ArrayIconBackground, setArrayIconBackground] = useState<string[]>(['', '', '']);
     const [PreviewImg, setPreviewImg] = useState<string>('');
     const [TimeoutAppereance, setTimeoutAppereance] = useState<boolean>(false);
-    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/uploads/`;
+    const ServerURL = `${process.env.NEXT_PUBLIC_URL_SERVER}/projects/uploads/`;
 
     const handleRelevantURLImages = useCallback(() => {
         if (data.URLImages.img.length > 0) setPreviewImg(data.URLImages.img[data.view.findIndex(el => el === true)]);
