@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import style from './styles.module.scss';
-import Image from 'next/image';
 import { useGetSizingWindow } from '@/hooks/useGetSizingWindow/useGetSizingWindow';
 
 type ArrayImagesType = {
@@ -88,14 +87,13 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                 data-interactive={`${el.view ? 'false' : 'true'}`}
                                 style={{ transform: `translateX(${el.shift}px) ${!el.view ? 'scale(0.8)' : 'scale(1)'}`, cursor: `${!el.view ? 'pointer' : 'default'}`, opacity: `${!el.view ? '0.8' : '1'}`, border: `1px solid ${`rgba(${color}, 0.4)`}` }}
                             >
-                                <Image
-                                    className={style.img__image}
+                                <img
                                     src={`${ServerURL}${el.path}`}
-                                    alt='Image'
-                                    fill
-                                    priority
-                                    sizes="100%"
+                                    alt="Image"
+                                    className={style.img__image}
                                     style={{
+                                        width: '100%',
+                                        height: '100%',
                                         objectFit: 'contain',
                                     }}
                                 />
