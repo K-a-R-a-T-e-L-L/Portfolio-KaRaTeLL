@@ -44,6 +44,12 @@
    cd ../server
    npx prisma migrate dev && npm run build && npm run start:prod
 
+7. В режиме разработки запуск осуществляется так:
+   ```bash
+   npx prisma migrate dev && npm run start:dev
+   cd ../client
+   npm run dev
+
 ## 📞 Контакты
    ● **Телеграм** — [@K_a_R_a_T_e_L_L](https://t.me/K_a_R_a_T_e_L_L)
    
