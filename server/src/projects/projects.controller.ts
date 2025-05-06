@@ -11,7 +11,7 @@ import { Response } from 'express';
 @Controller('projects')
 export class ProjectsController {
 
-  constructor(private readonly projectsService: ProjectsService) {  };
+  constructor(private readonly projectsService: ProjectsService) { };
 
   @Post('addingProject')
   @Roles(process.env.ADMIN_ROLE as string)
@@ -21,8 +21,8 @@ export class ProjectsController {
     { name: 'icon', maxCount: 3 }
   ], multerConfig))
 
-  async addingProject(@UploadedFiles() files: { img?: Express.Multer.File[], icon?: Express.Multer.File[] }, @Body() createProjectsDto: CreateProjectsDto) {    
-    
+  async addingProject(@UploadedFiles() files: { img?: Express.Multer.File[], icon?: Express.Multer.File[] }, @Body() createProjectsDto: CreateProjectsDto) {
+
     return this.projectsService.addingProject({
       ...createProjectsDto,
       positioningIcon: JSON.parse(createProjectsDto.positioningIcon),
@@ -39,8 +39,13 @@ export class ProjectsController {
     @Query('q') quality: number,
     @Res() res: Response
   ) {
+    res.set({
+      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Access-Control-Allow-Origin': '*',
+      'Vary': 'Accept, Accept-Encoding'
+    });
     return this.projectsService.processImage(filename, width, quality, res);
-  }
+  };
 
   @Get('getProjects')
   async getProjects() {

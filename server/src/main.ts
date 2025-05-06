@@ -21,6 +21,7 @@ async function bootstrap() {
     origin:  JSON.parse(process.env.ALLOWED_DOMAINS as string) || [],
     methods: 'GET,POST,DELETE, PUT',
     allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'Content-Range'],
     credentials: true
   });
 

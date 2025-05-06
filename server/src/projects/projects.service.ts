@@ -57,22 +57,54 @@ export class ProjectsService {
         const filePath = join(process.cwd(), 'uploads', filename);
 
         try {
-            if (!width) {
+            // Проверяем существование файла
+            await fs.access(filePath);
+
+            // Если width не указан или меньше 100px, отдаем оригинал
+            if (!width || width < 100) {
+                res.set('Content-Type', this.getMimeType(filename));
                 return res.sendFile(filePath);
             }
 
+            // Обрабатываем изображение
             const transformer = sharp(filePath)
-                .resize({ width: Math.min(Number(width), 3840) })
-                .jpeg({ quality: quality ? Number(quality) : 75 });
+                .resize({
+                    width: Math.min(Math.max(Number(width), 100), 3840), // Минимальная ширина 100px
+                    withoutEnlargement: true // Не увеличиваем маленькие изображения
+                })
+                .jpeg({
+                    quality: quality ? Math.min(Math.max(Number(quality), 10), 100) : 75,
+                    mozjpeg: true
+                })
+                .on('error', () => {
+                    // В случае ошибки обработки - отдаем оригинал
+                    res.set('Content-Type', this.getMimeType(filename));
+                    res.sendFile(filePath);
+                });
 
             res.set('Content-Type', 'image/jpeg');
             return transformer.pipe(res);
         } catch (e) {
             try {
+                res.set('Content-Type', this.getMimeType(filename));
                 return res.sendFile(filePath);
             } catch (err) {
                 throw new NotFoundException('Image not found');
             }
+        }
+    }
+
+    private getMimeType(filename: string): string {
+        const extension = filename.split('.').pop()?.toLowerCase();
+        switch (extension) {
+            case 'png':
+                return 'image/png';
+            case 'webp':
+                return 'image/webp';
+            case 'gif':
+                return 'image/gif';
+            default:
+                return 'image/jpeg';
         }
     }
 
