@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_HOSTNAME_SERVER as string,
-        pathname: '/uploads/**'
+        pathname: '/uploads/**',
+        // port: '4000'
       }
     ],
     deviceSizes: [320, 640, 828, 1080, 1200], 

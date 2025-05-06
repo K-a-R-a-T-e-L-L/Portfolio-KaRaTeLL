@@ -90,10 +90,9 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                             >
                                 <Image
                                     className={style.img__image}
-                                    src={`${ServerURL}${el.path}`}
+                                    src={`${ServerURL}${el.path}?v=${Date.now()}`}
                                     alt='Image'
                                     fill
-                                    priority
                                     sizes="100%"
                                     style={{
                                         objectFit: 'contain',

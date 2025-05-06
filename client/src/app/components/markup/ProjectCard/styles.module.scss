@@ -202,9 +202,9 @@
         height: 15px;
 
         .box_stack__el {
-            font-size: 5px;
+            font-size: 5px !important;
             padding: 0 7px;
-            border-radius: 2px;
+            border-radius: 2px !important;
             height: 15px;
         }
     }

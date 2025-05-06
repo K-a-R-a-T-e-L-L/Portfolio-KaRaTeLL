@@ -32,11 +32,9 @@ const Projects = () => {
     const { TokenCookie, deleteTokenCookie } = useCookie('token', '', '/', 600);
     const { setToken, TokenDecode, setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [ArrayProjects, setArrayProjects] = useState<ArrayProjectsType>([]);
+    const [LoadingTime, setLoadingTime] = useState<number>(0);
 
     const handleGettingProjects = () => {
-        if (MessageError === '' && Loading) {
-            setTimeout(() => { setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!'); }, 1000)
-        }
         setLoading(true);
         axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/projects/getProjects`)
             .then((res) => {
@@ -60,9 +58,25 @@ const Projects = () => {
         // eslint-disable-next-line
     }, []);
 
+
+    useEffect(() => {
+        if (Loading) {
+            const interval = setInterval(() => {
+                setLoadingTime((prevState) => prevState + 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        } else (setLoadingTime(0));
+    }, [Loading]);
+
+    useEffect(() => {
+        if (MessageError === '' && LoadingTime === 4) {
+            setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!');
+        };
+    }, [LoadingTime]);
+
     useEffect(() => {
         if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
-            const timeout = setTimeout(() => { setMessageError('') }, 4000);
+            const timeout = setTimeout(() => { setMessageError('') }, 5000);
             return () => clearTimeout(timeout);
         };
     }, [MessageError]);

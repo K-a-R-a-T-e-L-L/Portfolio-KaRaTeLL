@@ -12,6 +12,7 @@ const Skills = () => {
     const { TokenCookie, deleteTokenCookie } = useCookie('token', '', '/', 600);
     const { setToken, Token, TokenDecode, setLoading, setMessageError, Loading, MessageError } = useTokenValid(TokenCookie || '', deleteTokenCookie);
     const [ValueSkill, setValueSkill] = useState<string>('');
+    const [LoadingTime, setLoadingTime] = useState<number>(0);
 
     const handleAddingStack = (index: number, id: number) => {
         axios.put(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/updateActive/${id}`, {}, {
@@ -109,9 +110,7 @@ const Skills = () => {
     };
 
     useEffect(() => {
-        if (MessageError === '' && Loading) {
-            setTimeout(() => { setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!'); }, 1000)
-        }
+
         setLoading(true);
         axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/skills/getSkills`)
             .then((res) => {
@@ -132,17 +131,32 @@ const Skills = () => {
     }, []);
 
     useEffect(() => {
+        if (Loading) {
+            const interval = setInterval(() => {
+                setLoadingTime((prevState) => prevState + 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        } else { setLoadingTime(0) };
+    }, [Loading]);
+
+    useEffect(() => {
+        if (MessageError === '' && LoadingTime === 4) {
+            setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!');
+        };
+    }, [LoadingTime]);
+
+    useEffect(() => {
+        if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
+            const timeout = setTimeout(() => { setMessageError('') }, 5000);
+            return () => clearTimeout(timeout);
+        };
+    }, [MessageError]);
+
+    useEffect(() => {
         if (TokenCookie) {
             setToken(TokenCookie);
         };
     }, [TokenCookie, setToken]);
-
-    useEffect(() => {
-        if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
-            const timeout = setTimeout(() => { setMessageError('') }, 4000);
-            return () => clearTimeout(timeout);
-        };
-    }, [MessageError]);
 
     useEffect(() => {
         const inputSkills = document.getElementById('new-skill');
