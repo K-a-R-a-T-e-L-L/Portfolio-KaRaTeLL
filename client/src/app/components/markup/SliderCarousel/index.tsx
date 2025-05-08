@@ -94,6 +94,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({ imagesCarousel, color }
                                     alt='Image'
                                     fill
                                     sizes="100%"
+                                    priority
                                     style={{
                                         objectFit: 'contain',
                                     }}
