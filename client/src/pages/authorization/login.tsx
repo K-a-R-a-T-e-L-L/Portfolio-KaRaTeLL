@@ -23,6 +23,7 @@ const Form = ({ token }: { token: string }) => {
     const RefAvatar = useRef<HTMLDivElement>(null);
     const RefInputL = useRef<HTMLInputElement>(null);
     const RefInputP = useRef<HTMLInputElement>(null);
+    const [LoadingTime, setLoadingTime] = useState<number>(0);
 
     const handleValueInput = (e: ChangeEvent<HTMLInputElement>, set: (value: string) => void) => {
         set(e.target.value);
@@ -118,6 +119,28 @@ const Form = ({ token }: { token: string }) => {
             el.removeAttribute('readOnly');
         });
     };
+
+    useEffect(() => {
+        if (Loading) {
+            const interval = setInterval(() => {
+                setLoadingTime((prevState) => prevState + 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        } else (setLoadingTime(0));
+    }, [Loading]);
+
+    useEffect(() => {
+        if (MessageError === '' && LoadingTime === 4) {
+            setMessageError('Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!');
+        };
+    }, [LoadingTime, MessageError, setMessageError]);
+
+    useEffect(() => {
+        if (MessageError === 'Если загрузка слишком долгая, прошу, дождитесь запуска сервера (до 1 мин)!!!') {
+            const timeout = setTimeout(() => { setMessageError('') }, 5000);
+            return () => clearTimeout(timeout);
+        };
+    }, [MessageError, setMessageError]);
 
     useEffect(() => {
         if (TokenCookie) {

@@ -1,0 +1,11 @@
+{
+    "routes": [
+        {
+            "src": "/uploads/(.*)",
+            "headers": {
+                "Cache-Control": "no-store"
+            },
+            "dest": "/uploads/$1"
+        }
+    ]
+}
