@@ -35,91 +35,91 @@ const Form = ({ token }: { token: string }) => {
         event.preventDefault();
         setLoading(true);
 
-        // if (Email === '' || Email.length < 7 || Email.length > 130) {
-        //     setWarnInputs((prevState) => {
-        //         const newPrevState = { ...prevState };
-        //         newPrevState.email = 'Введите от 7 до 130 символов !!!';
-        //         return newPrevState;
-        //     });
-        //     setLoading(false);
-        //     return;
-        // };
+        if (Email === '' || Email.length < 7 || Email.length > 130) {
+            setWarnInputs((prevState) => {
+                const newPrevState = { ...prevState };
+                newPrevState.email = 'Введите от 7 до 130 символов !!!';
+                return newPrevState;
+            });
+            setLoading(false);
+            return;
+        };
 
-        // if (Number === '' || Number.length < 5 || Number.length > 20) {
-        //     setWarnInputs((prevState) => {
-        //         const newPrevState = { ...prevState };
-        //         newPrevState.number = 'Введите от 5 до 20 символов !!!';
-        //         return newPrevState;
-        //     });
-        //     setLoading(false);
-        //     return;
-        // };
+        if (Number === '' || Number.length < 5 || Number.length > 20) {
+            setWarnInputs((prevState) => {
+                const newPrevState = { ...prevState };
+                newPrevState.number = 'Введите от 5 до 20 символов !!!';
+                return newPrevState;
+            });
+            setLoading(false);
+            return;
+        };
 
-        // if (Password === '' || Password.length < 8 || Password.length > 50) {
-        //     setWarnInputs((prevState) => {
-        //         const newPrevState = { ...prevState };
-        //         newPrevState.password = 'Введите от 8 до 50 символов !!!';
-        //         return newPrevState;
-        //     });
-        //     setLoading(false);
-        //     return;
-        // };
+        if (Password === '' || Password.length < 8 || Password.length > 50) {
+            setWarnInputs((prevState) => {
+                const newPrevState = { ...prevState };
+                newPrevState.password = 'Введите от 8 до 50 символов !!!';
+                return newPrevState;
+            });
+            setLoading(false);
+            return;
+        };
 
-        // try {
-        //     setWarnInputs({ email: '', number: '', password: '' });
-        //     setEmail('');
-        //     setNumber('');
-        //     setPassword('');
-        //     const res = await axios.post(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/auth/register`, { email: Email, number: Number, password: Password })
-        //     const accessToken = res.data.access_token;
-        //     if (accessToken) {
-        //         try {
-        //             const decodedToken: TokenDecodeType = jwtDecode(accessToken);
-        //             setTokenDecode(decodedToken);
-        //             if (decodedToken.exp > Date.now() / 1000) {
-        //                 updateTokenCookie(accessToken);
-        //                 setMessageError('');
-        //                 window.location.href = '/';
-        //             }
-        //             else {
-        //                 deleteTokenCookie();
-        //                 setMessageError('Истёк срок сессии!!!');
-        //             };
-        //         } catch (error) {
-        //             deleteTokenCookie();
-        //             setTokenDecode(null);
-        //             setMessageError('Ошибка валидации сессии!!!');
-        //             console.log(error);
-        //         };
-        //     }
-        //     else {
-        //         deleteTokenCookie();
-        //         setTokenDecode(null);
-        //         setMessageError('Ошибка получения сессии!!!');
-        //     };
-        // }
-        // catch (error: unknown) {
-        //     deleteTokenCookie();
-        //     console.error(error);
-        //     if (error instanceof Error) {
-        //         const customError = error as CustomError;
-        //         if (customError.status) {
-        //             switch (customError.status) {
-        //                 case 400:
-        //                     setMessageError('Отправляемые данные не соответствуют по кол-ву символов!!!');
-        //                     break;
-        //                 default:
-        //                     setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
-        //                     break;
-        //             };
-        //         }
-        //         else { console.log("Error:", customError) };
-        //     }
-        //     else { console.log("Error:", error) };
-        // }
-        // finally {
-        //     setLoading(false);
-        // };
+        try {
+            setWarnInputs({ email: '', number: '', password: '' });
+            setEmail('');
+            setNumber('');
+            setPassword('');
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/auth/register`, { email: Email, number: Number, password: Password })
+            const accessToken = res.data.access_token;
+            if (accessToken) {
+                try {
+                    const decodedToken: TokenDecodeType = jwtDecode(accessToken);
+                    setTokenDecode(decodedToken);
+                    if (decodedToken.exp > Date.now() / 1000) {
+                        updateTokenCookie(accessToken);
+                        setMessageError('');
+                        window.location.href = '/';
+                    }
+                    else {
+                        deleteTokenCookie();
+                        setMessageError('Истёк срок сессии!!!');
+                    };
+                } catch (error) {
+                    deleteTokenCookie();
+                    setTokenDecode(null);
+                    setMessageError('Ошибка валидации сессии!!!');
+                    console.log(error);
+                };
+            }
+            else {
+                deleteTokenCookie();
+                setTokenDecode(null);
+                setMessageError('Ошибка получения сессии!!!');
+            };
+        }
+        catch (error: unknown) {
+            deleteTokenCookie();
+            console.error(error);
+            if (error instanceof Error) {
+                const customError = error as CustomError;
+                if (customError.status) {
+                    switch (customError.status) {
+                        case 400:
+                            setMessageError('Отправляемые данные не соответствуют по кол-ву символов!!!');
+                            break;
+                        default:
+                            setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
+                            break;
+                    };
+                }
+                else { console.log("Error:", customError) };
+            }
+            else { console.log("Error:", error) };
+        }
+        finally {
+            setLoading(false);
+        };
     };
 
     const handleRemoveReadOnly = () => {
