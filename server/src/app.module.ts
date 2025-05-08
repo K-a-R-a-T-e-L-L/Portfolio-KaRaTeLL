@@ -5,6 +5,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { SkillsModule } from './skills/skills.module';
 import { MessageModule } from './message/message.module';
 import { BotModule } from './bot/bot.module';
+import { UpModule } from './up/up.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BotModule } from './bot/bot.module';
     SkillsModule,
     MessageModule,
     BotModule,
+    UpModule,
   ],
   providers: [PrismaService],
 })

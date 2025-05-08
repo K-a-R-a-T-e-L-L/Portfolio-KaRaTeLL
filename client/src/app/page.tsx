@@ -9,6 +9,7 @@ import Skeleton from "./components/markup/Skeleton";
 import { useSessionStorage } from "../hooks/useSessionStorage/useSessionStorage";
 import BackgroundMain from "./components/decorative/BackgroundMain";
 import ButtonExit from "./components/decorative/ButtonExit";
+import axios from "axios";
 
 export default function Home() {
 
@@ -30,6 +31,17 @@ export default function Home() {
     const canvas = document.getElementsByTagName('canvas')[0];
     if (canvas) setBackgroundUploaded(canvas);
   }, []);
+
+
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_URL_SERVER}/api/up/list`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }, [CurrentComponent]);
 
   return (
     <>
