@@ -31,7 +31,7 @@ export class CreateProjectsDto {
     images: {
         img?: Express.Multer.File[],
         icon?: Express.Multer.File[]
-    };
+    } | null;
 
     @IsJSON()
     view: string;

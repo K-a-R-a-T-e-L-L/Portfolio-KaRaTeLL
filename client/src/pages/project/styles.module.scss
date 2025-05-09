@@ -124,7 +124,7 @@
     }
 
     .project_div__delete_project {
-        width: 3%;
+        width: 30px;
         aspect-ratio: 1/1;
         background-color: rgba(255, 0, 0, 0.226);
         border-radius: 15%;
@@ -134,7 +134,7 @@
         background-image: url(/images/delete.png);
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: 100% 100%;
+        background-size: 70% 70%;
         cursor: pointer;
         border: 1px solid red;
         z-index: 3;
@@ -145,6 +145,31 @@
 
         &:active {
             background-color: rgba(255, 0, 0, 0.6);
+        }
+    }
+
+    .project_div__edit_project {
+        width: 29px;
+        aspect-ratio: 1/1;
+        background-color: rgba(169, 169, 169, 0.2);
+        border-radius: 15%;
+        position: fixed;
+        left: calc( 1% + 40px);
+        bottom: 1%;
+        background-image: url(/images/edit.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 60% 60%;
+        cursor: pointer;
+        border: 1px solid darkgrey;
+        z-index: 3;
+
+        &:hover {
+            background-color: rgba(169, 169, 169, 0.4);
+        }
+
+        &:active {
+            background-color: rgba(169, 169, 169, 0.6);
         }
     }
 

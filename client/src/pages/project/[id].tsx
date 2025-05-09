@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import MessageErrorBlock from '@/app/components/decorative/MessageErrorBlock';
 import MessageSuccessfullyBlock from '@/app/components/decorative/MessageSuccessfullyBlock';
 import { ArrayImagesType, ProjectType } from '@/types.global';
+import Link from 'next/link';
 
 const ProjectPage = () => {
 
@@ -59,6 +60,9 @@ const ProjectPage = () => {
                     switch (error.response?.status) {
                         case 401:
                             setMessageError('Доступ запрещен!!!');
+                            break;
+                        case 404:
+                            setMessageError('Данного проекта не существует, вероятно он был уже удален!!!');
                             break;
                         default:
                             setMessageError('Ошибка сервера или отсутствует подключение к сети!!!');
@@ -201,7 +205,10 @@ const ProjectPage = () => {
                             )
                         )}
                         {TokenDecode?.role === process.env.NEXT_PUBLIC_ROLE && !SuccessfullyDelete && (
-                            <button data-interactive="true" className={style.project_div__delete_project} onClick={() => handleDeleteProject(Project.id)}></button>
+                            <>
+                                <button data-interactive="true" className={style.project_div__delete_project} onClick={() => handleDeleteProject(Project.id)}></button>
+                                <Link href={`/edit/${Project.id}`} className={style.project_div__edit_project} data-interactive="true"></Link>
+                            </>
                         )}
                         {MessageError && (<MessageErrorBlock MessageError={MessageError} setMessageError={setMessageError} />)}
                     </div>

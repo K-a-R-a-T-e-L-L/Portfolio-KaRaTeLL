@@ -2,8 +2,6 @@ import { BadRequestException, ConflictException, Injectable, InternalServerError
 import { PrismaService } from 'src/prisma/prisma.service';
 import { unlinkSync, promises as fs } from 'fs';
 import { join } from 'path';
-import { Response } from 'express';
-import sharp from 'sharp';
 
 @Injectable()
 export class ProjectsService {
@@ -49,7 +47,7 @@ export class ProjectsService {
             if (images.icon) {
                 images.icon.forEach(file => unlinkSync(file.path));
             }
-            throw new InternalServerErrorException('Bad connection or server error when receiving projects!!!');
+            throw new InternalServerErrorException('Bad connection or server error when adding projects!!!');
         }
     };
 
@@ -132,6 +130,83 @@ export class ProjectsService {
             await Promise.all(deletePromises);
         } catch (err) {
             console.error('File deletion error:', err);
+        }
+    }
+
+    async editProject(data) {
+        const { name, link, description, positioningIcon, color, skills, images, view, id } = data;
+
+        if (skills.length < 3 || skills.length > 20) {
+            throw new BadRequestException('Add from 3 to 20 skills!!!');
+        };
+
+        const project = await this.prisma.projects.findUnique({
+            where: { id: id }
+        });
+
+        if (!project) throw new NotFoundException('Project not found!!!');
+
+        const ImagesPaths = () => {
+            if (images) {
+                return {
+                    img: images.img?.map((file) => file.filename) || [],
+                    icon: images.icon?.map((file) => file.filename) || []
+                }
+            } else return null;
+        };
+
+        const newURLImagesProject = async () => {
+            const paths = ImagesPaths();
+            const URLImages = JSON.parse(project.URLImages as string);
+
+            if (paths !== null) {
+                if (paths.img.length > 0 && paths.icon.length > 0) {
+                    await this.deleteFilesSafely(URLImages);
+                    return paths;
+                }
+                else if (paths.img.length > 0 && paths.icon.length === 0) {
+                    await this.deleteFilesSafely({ img: URLImages.img, icon: [] });
+                    return { img: paths.img, icon: URLImages.icon };
+                }
+                else if (paths.img.length === 0 && paths.icon.length > 0) {
+                    await this.deleteFilesSafely({ img: [], icon: URLImages.icon });
+                    return { img: URLImages.img, icon: paths.icon };
+                }
+                else { return URLImages; };
+            }
+            else { return URLImages; };
+        };
+
+        const URLImagesProject = await newURLImagesProject();
+
+        const newView = view.map((el) => {
+            if (el === null) { return false }
+            else { return true };
+        });
+
+        try {
+            return await this.prisma.projects.update({
+                where: { id: project.id },
+                data: {
+                    name: name,
+                    link: link,
+                    description: description,
+                    positioningIcon: JSON.stringify(positioningIcon),
+                    color: color,
+                    view: newView,
+                    URLImages: JSON.stringify(URLImagesProject),
+                    skills: skills
+                }
+            })
+        } catch (error) {
+            console.error(error);
+            if (images.img) {
+                images.img.forEach(file => unlinkSync(file.path));
+            }
+            if (images.icon) {
+                images.icon.forEach(file => unlinkSync(file.path));
+            }
+            throw new InternalServerErrorException('Bad connection or server error when updating projects!!!');
         }
     }
 }

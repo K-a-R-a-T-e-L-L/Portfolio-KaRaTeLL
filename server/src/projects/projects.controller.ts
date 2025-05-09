@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateProjectsDto } from './create-projects.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'multer.config';
@@ -10,7 +10,7 @@ import { ProjectsService } from './projects.service';
 @Controller('projects')
 export class ProjectsController {
 
-  constructor(private readonly projectsService: ProjectsService) {  };
+  constructor(private readonly projectsService: ProjectsService) { };
 
   @Post('addingProject')
   @Roles(process.env.ADMIN_ROLE as string)
@@ -20,8 +20,8 @@ export class ProjectsController {
     { name: 'icon', maxCount: 3 }
   ], multerConfig))
 
-  async addingProject(@UploadedFiles() files: { img?: Express.Multer.File[], icon?: Express.Multer.File[] }, @Body() createProjectsDto: CreateProjectsDto) {    
-    
+  async addingProject(@UploadedFiles() files: { img?: Express.Multer.File[], icon?: Express.Multer.File[] }, @Body() createProjectsDto: CreateProjectsDto) {
+
     return this.projectsService.addingProject({
       ...createProjectsDto,
       positioningIcon: JSON.parse(createProjectsDto.positioningIcon),
@@ -30,6 +30,7 @@ export class ProjectsController {
       images: files
     });
   };
+
 
   @Get('getProjects')
   async getProjects() {
@@ -46,5 +47,27 @@ export class ProjectsController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   async deleteProject(@Param("id") id: string) {
     return this.projectsService.deleteProject(Number(id))
+  };
+
+
+  @Put('editProject/:id')
+  @Roles(process.env.ADMIN_ROLE as string)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'img', maxCount: 20 },
+    { name: 'icon', maxCount: 3 }
+  ], multerConfig))
+
+  async editProject(@Param("id") id: string, @UploadedFiles() files: { img?: Express.Multer.File[], icon?: Express.Multer.File[] }, @Body() createProjectsDto: CreateProjectsDto) {
+    return this.projectsService.editProject(
+      {
+        ...createProjectsDto,
+        positioningIcon: JSON.parse(createProjectsDto.positioningIcon),
+        skills: JSON.parse(createProjectsDto.skills),
+        view: JSON.parse(createProjectsDto.view),
+        images: files,
+        id: Number(id)
+      }
+    )
   };
 };

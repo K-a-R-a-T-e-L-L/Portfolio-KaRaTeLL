@@ -1,0 +1,544 @@
+@forward "@/styles/fonts.scss";
+
+.adding_projects {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: grid;
+    place-items: center;
+    position: relative;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.415);
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 255, 0.529);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: black;
+        border-radius: 6px;
+    }
+
+    .strong {
+        color: rgb(255, 47, 0);
+        font-size: 8px;
+        letter-spacing: 1px;
+        margin-left: 10px;
+    }
+
+    .adding_projects__content {
+        width: 95%;
+        height: 95%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 40px;
+        color: white;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            height: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.415);
+            border-radius: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 255, 0.529);
+        }
+
+        &::-webkit-scrollbar-track {
+            background: black;
+            border-radius: 6px;
+        }
+
+        .content__project_edit_form {
+            width: 85%;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            padding-top: 10px;
+
+            @mixin BlockForm($positionX, $gap) {
+                display: flex;
+                flex-direction: column;
+                align-items: $positionX;
+                justify-content: space-evenly;
+                row-gap: $gap;
+            }
+
+            @mixin InputLabel () {
+                width: 70%;
+                @include BlockForm(start, 0px);
+                background-color: rgba(0, 44, 42, 0.377);
+                padding: 5px 0;
+                border-radius: 5px;
+
+                label {
+                    font-size: 10px;
+                    font-weight: 100;
+                    padding: 0 3% 0 3%;
+                    color: aqua;
+                }
+
+                input[type=text] {
+                    width: 100%;
+                    height: 30px;
+                    border: 0;
+                    box-sizing: border-box;
+                    padding: 0 3% 0 3%;
+                    background-color: transparent;
+                    outline: none;
+                    color: aquamarine;
+
+                    &::placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+
+                    &::-moz-placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+
+                    &::-webkit-input-placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+                }
+
+                input[type=file] {
+                    display: none;
+                }
+
+                input[type=color] {
+                    border: 0;
+                    width: 30px;
+                    height: 30px;
+                    padding: 0;
+                    margin-left: 3%;
+                    background-color: transparent;
+                    cursor: pointer;
+                }
+
+                input[type="range"] {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 90%;
+                    height: 5px;
+                    background: black;
+                    border-radius: 100%;
+                }
+
+                input[type="range"]::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    width: 10px;
+                    height: 10px;
+                    background: aqua;
+                    border-radius: 100%;
+                    cursor: pointer;
+                    margin-top: -1px;
+                }
+
+                input[type="range"]::-moz-range-thumb {
+                    width: 10px;
+                    height: 10px;
+                    background: aqua;
+                    border-radius: 100%;
+                    cursor: pointer;
+                }
+
+                input[type="range"]::-ms-thumb {
+                    width: 10px;
+                    height: 10px;
+                    background: aqua;
+                    border-radius: 100%;
+                    cursor: pointer;
+                }
+
+                input[type="range"]::-webkit-slider-runnable-track {
+                    background: black;
+                }
+
+                input[type="range"]::-moz-range-track {
+                    background: black;
+                }
+
+                input[type="range"]::-ms-track {
+                    background: black;
+                    border-color: transparent;
+                    color: transparent;
+                    height: 10px;
+                }
+
+                input[type="range"]::-ms-fill-lower {
+                    background: black;
+                }
+
+                input[type="range"]::-ms-fill-upper {
+                    background: black;
+                }
+
+                textarea {
+                    max-width: 100%;
+                    min-width: 100%;
+                    min-height: 30px;
+                    max-height: 170px;
+                    border: 0;
+                    box-sizing: border-box;
+                    padding: 0 3% 0 3%;
+                    background-color: transparent;
+                    outline: none;
+                    color: aquamarine;
+
+                    &::placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+
+                    &::-moz-placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+
+                    &::-webkit-input-placeholder {
+                        color: rgba(0, 255, 255, 0.15);
+                    }
+
+                    &::-webkit-scrollbar {
+                        width: 3px;
+                        height: 3px;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 255, 255, 0.415);
+                        border-radius: 6px;
+                    }
+
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: rgba(0, 255, 255, 0.529);
+                    }
+
+                    &::-webkit-scrollbar-track {
+                        background: black;
+                        border-radius: 6px;
+                    }
+                }
+            }
+
+            @mixin ImagesAndIconBackgOneBlock () {
+                label {
+                    font-size: 12px;
+                    text-align: center;
+                    cursor: pointer;
+
+                    div {
+                        margin-top: 10px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        min-height: 50px;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                        padding: 5px;
+                        margin-top: 20px;
+                        background-color: transparent;
+                        border: 1px dashed rgba(0, 255, 255, 0.3);
+
+                        div {
+                            margin-top: 0px;
+                            background-color: rgba(0, 44, 42, 0.377);
+                            min-width: 60px;
+                            max-width: 60px;
+                            min-height: 50px;
+                            max-height: 50px;
+                            border: 0;
+                            padding: 0;
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                            background-size: cover;
+                            display: grid;
+                            place-items: center;
+                        }
+                    }
+                }
+            }
+
+            .project_edit_form__one_block {
+                @include BlockForm(center, 15px);
+
+                div {
+                    @include InputLabel();
+                }
+
+                .one_block__images {
+                    min-height: 100px;
+                    @include ImagesAndIconBackgOneBlock();
+                    display: flex;
+                    align-items: center;
+
+                    .images__radio {
+                        background-color: black;
+                        border: 1px solid aqua;
+                        border-radius: 100%;
+                        width: 20px;
+                        height: 20px;
+                        z-index: 2;
+                    }
+
+                    .images__radio_active {
+                        background-image: url(/images/circle.png);
+                        background-size: 50% 50%;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                    }
+                }
+
+                .one_block__position {
+                    flex-direction: row;
+                    align-items: center;
+
+                    div:nth-child(1) {
+                        background-color: transparent;
+                        width: 40%;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+
+                        button {
+                            width: 20px;
+                            height: 20px;
+                            background-color: black;
+                            color: aqua;
+                            border: 0;
+                            font-weight: 100;
+
+                            &:active {
+                                scale: 0.9;
+                            }
+                        }
+
+                        input[type=text] {
+                            width: 30px;
+                            height: 30px;
+                            border: 1px solid rgba(0, 255, 255, 0.1);
+                            border-radius: 5px;
+                            color: aquamarine;
+                            text-align: center;
+                        }
+                    }
+
+                    div:nth-child(2) {
+                        height: 100%;
+                        align-items: center;
+                        background-color: transparent;
+
+                        @mixin InputBefore ($content) {
+                            &::before {
+                                content: $content;
+                                color: aqua;
+                                font-size: 8px;
+                                position: absolute;
+                                left: -8px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                            }
+                        }
+
+                        input {
+                            width: 90%;
+                            position: relative;
+                        }
+
+                        input:nth-child(1) {
+                            @include InputBefore("y")
+                        }
+
+                        input:nth-child(2) {
+                            @include InputBefore("x");
+
+                            &::after {
+                                content: "0";
+                                font-size: 6px;
+                                opacity: 0.5;
+                                color: aqua;
+                                position: absolute;
+                                left: 50%;
+                                bottom: -15px;
+                                transform: translateY(-50%);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .project_edit_form__two_block {
+                @include BlockForm(center, 15px);
+
+                div {
+                    @include InputLabel();
+                }
+
+                .two_block__icon_background {
+                    min-height: 100px;
+                    align-items: center;
+
+                    @include ImagesAndIconBackgOneBlock();
+                }
+
+                .two_block__color {
+                    flex-direction: row;
+
+                    input[type=text] {
+                        border-bottom: 1px solid rgba(127, 255, 212, 0.22);
+                        width: 80%;
+                        margin-left: 5px;
+                        letter-spacing: 2px;
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                }
+
+                .two_block__skills {
+                    .skills__new_skill {
+                        display: flex;
+                        flex-direction: row;
+                        width: 100%;
+                        background-color: transparent;
+
+                        button {
+                            width: 30px;
+                            height: 30px;
+                            background-image: url(/images/send.png);
+                            background-color: transparent;
+                            background-repeat: no-repeat;
+                            background-size: 70% 60%;
+                            background-position: left center;
+                            padding: 0;
+                            border: 0;
+                            cursor: pointer;
+                            opacity: 0.6;
+
+                            &:focus-visible {
+                                outline: 0;
+                                background-color: rgba(0, 255, 255, 0.1);
+                                border-radius: 0 100% 100% 0;
+                            }
+
+                            &:active {
+                                opacity: 1;
+                            }
+                        }
+                    }
+
+                    .skills__skill {
+                        background-color: transparent;
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: start;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                        padding: 5px;
+
+                        div {
+                            width: auto;
+                            max-width: 90%;
+                            overflow: hidden;
+                            font-family: 'Piksieli Prst';
+                            font-size: 10px;
+                            font-weight: 100;
+                            letter-spacing: 2px;
+                            display: flex;
+                            flex-direction: row;
+                            column-gap: 10px;
+                            padding: 5px 10px;
+                            align-items: center;
+
+                            button {
+                                cursor: pointer;
+                                width: 20px;
+                                height: 20px;
+                                position: relative;
+                                padding: 0;
+                                background-color: rgba(0, 0, 0, 0.2);
+                                border: 1px solid rgba(255, 0, 0, 0.2);
+                                border-radius: 2px;
+
+                                &:hover {
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    border: 1px solid rgba(255, 0, 0, 0.5);
+
+                                    &::before {
+                                        color: red;
+                                    }
+                                }
+
+                                &:active {
+                                    scale: 0.95;
+                                }
+
+                                &::before {
+                                    content: "✕";
+                                    position: absolute;
+                                    font-weight: 900;
+                                    color: rgba(255, 0, 0, 0.7);
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translateX(-50%) translateY(-50%);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .two_block__submit {
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            background-color: black;
+            color: rgba(0, 255, 255, 0.7);
+            width: 30%;
+            height: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+
+            &:active {
+                border: 1px solid rgba(0, 255, 255, 0.5);
+                color: rgba(0, 255, 255, 0.9);
+            }
+        }
+    }
+
+    @keyframes AppereanceError {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+@media (width < 1100px) {
+    .adding_projects__content {
+        flex-direction: column-reverse !important;
+        row-gap: 20px !important;
+        padding-top: 30px;
+
+        .content__project_edit_form {
+            grid-template-columns: 100% !important;
+            row-gap: 15px;
+            padding-top: 0 !important;
+        }
+    }
+}
